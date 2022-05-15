@@ -1,8 +1,8 @@
-var map = [0,0,0,0,0,0,0,0,0];
+var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 function generate(){
-    let rand1 = Math.floor(Math.random() * (9 - 1)) + 1;
-    let rand2 = Math.floor(Math.random() * (9 - 1)) + 1;
+    let rand1 = Math.floor(Math.random() * (16 - 0));
+    let rand2 = Math.floor(Math.random() * (16 - 0));
 
     let box1 = document.getElementById(rand1);
     let box2 = document.getElementById(rand2);
