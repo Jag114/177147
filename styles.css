@@ -1,0 +1,18 @@
+body{
+    font-size: 40px;
+    font-weight: bold;;
+}
+
+.box{
+    height: 100%;
+    border-style:solid;
+    border-color: black;
+    text-align: center;
+    background-color: teal;
+}
+
+.row{
+    width: 200px;
+    height: 200px;
+    float: left;
+}
