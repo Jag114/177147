@@ -1,6 +1,7 @@
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 function update(){
+
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
     console.log("Update: ",rand1,rand2)
@@ -16,6 +17,7 @@ function update(){
         }
         return update();
     }else{
+        checkMap()
         let box1 = document.getElementById(rand1);
         let box2 = document.getElementById(rand2);
         if(box2 == box1){
@@ -24,17 +26,28 @@ function update(){
             map[rand1] = 3;
             map[rand2] = 3;
             console.table(map);
-            return box1.innerText = map[rand1], box2.innerText=map[rand2];
+            return getValue();
+            
         }
     }
+    
 }
 
 document.addEventListener("keydown",function(event){
 switch(event.code) {
     case "KeyS":
     case "ArrowDown":
-        console.log(event.code);
-        //Math.pow(map[i],2);
+        //console.log(event.code);
+        for(let i = 0; i < 15; i++){
+            //console.log("i: ",i)
+            if(map[i]>0){
+                if(map[i] == map[i+4]){
+                    console.log("Power")
+                    map[i+4] = Math.pow(map[i+4],2); 
+                }
+            }
+
+        }
         return update();
     case "KeyW":
     case "ArrowUp":
@@ -53,16 +66,33 @@ switch(event.code) {
 });
 
 function checkMap(){
-    let i = 0;
 
+    let score = 0;
+    for(let x = 0; x < map.length; x++){
+        score += map[x];
+    }
+    let barScore = document.getElementsByClassName("score");
+    barScore.innerText = score;
+
+    let i = 0;
     map.forEach(e => {
         if(e > 0){
             i++;
         }
     });
-
     if(i >= 15){
         console.log("Game Over")
         return 0;
+    }
+
+ 
+}
+
+function getValue(){
+    for(let e = 0; e<map.length;e++){
+        if(map[e] > 0){ 
+            let box = document.getElementById(e);
+            box.innerText = map[e];
+        }
     }
 }

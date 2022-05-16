@@ -16,3 +16,9 @@ body{
     height: 200px;
     float: left;
 }
+
+.top-bar{
+    height: 10%;
+    width: 100%;
+    background-color: aquamarine;
+}
