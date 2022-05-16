@@ -44,6 +44,7 @@ switch(event.code) {
                 if(map[i] == map[i+4]){
                     console.log("Power")
                     map[i+4] = Math.pow(map[i+4],2); 
+                    map[i]=0;
                 }
             }
 
@@ -90,9 +91,12 @@ function checkMap(){
 
 function getValue(){
     for(let e = 0; e<map.length;e++){
+        let box = document.getElementById(e);
+
         if(map[e] > 0){ 
-            let box = document.getElementById(e);
             box.innerText = map[e];
+        }else{
+            box.innerText = " ";
         }
     }
 }
