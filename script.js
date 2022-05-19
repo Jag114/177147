@@ -1,6 +1,6 @@
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-function wynik(){
+function wynik(){//count score
     var suma = 0;
     for (let i = 0; i < map.length; i++) {
         suma += map[i];
@@ -8,7 +8,7 @@ function wynik(){
     return suma;
 }
 
-function update(){
+function update(){ //generate,update map
 
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
@@ -48,19 +48,32 @@ function update(){
     
 }
 
-document.addEventListener("keydown",function(event){
+document.addEventListener("keydown",function move(event){ //take input and modify map accordingly
 switch(event.code) {
     case "KeyS":
     case "ArrowDown":
-        for(let i = 0; i < 15; i++){  
-            if(map[i]>0){
+        for(let i = 15; i >= 0; i--){  
+            if(map[i] > 0){
+
+                if(map[i+4] == 0){
+                    map[i+4] = map[i];
+                    map[i] = 0;
+                    
+                }
+
                 if(map[i] == map[i+4]){
                     //console.log("Power")
                     map[i+4] = Math.pow(map[i+4],2); 
                     map[i]=0;
+                    
+                }
+
+                if(map[i] != map[i+4]){
+                    
                 }
             }
         }
+
         return update();
     case "KeyW":
     case "ArrowUp":
@@ -78,7 +91,7 @@ switch(event.code) {
 
 });
 
-function checkMap(){
+function checkMap(){ //check if there are empy spaces on map
 
     let i = 0;
     map.forEach(e => {
@@ -92,7 +105,7 @@ function checkMap(){
     }
 }
 
-function getValue(){
+function getValue(){ //get value from map[] and put it into box
     for(let e = 0; e<map.length;e++){
         let box = document.getElementById(e);
 
