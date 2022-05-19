@@ -63,7 +63,7 @@ switch(event.code) {
 
                 if(map[i] == map[i+4]){
                     //console.log("Power")
-                    map[i+4] = Math.pow(map[i+4],2); 
+                    map[i+4] = map[i+4]*3; 
                     map[i]=0;
                     
                 }
