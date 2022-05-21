@@ -57,36 +57,87 @@ switch(event.code) {
 
                 if(map[i+4] == 0){
                     map[i+4] = map[i];
-                    map[i] = 0;
-                    
+                    map[i] = 0;   
                 }
 
                 if(map[i] == map[i+4]){
                     //console.log("Power")
                     map[i+4] = map[i+4]*3; 
                     map[i]=0;
-                    
                 }
 
                 if(map[i] != map[i+4]){
-                    
+                    //idk
                 }
             }
         }
-
         return update();
     case "KeyW":
     case "ArrowUp":
-        console.log(event.code);
+        for(let i = 0; i <= map.length; i++){  
+            if(map[i] > 0){
+
+                if(map[i-4] == 0){
+                    map[i-4] = map[i];
+                    map[i] = 0;   
+                }
+
+                if(map[i] == map[i-4]){
+                    //console.log("Power")
+                    map[i-4] = map[i-4]*3; 
+                    map[i]=0;
+                }
+
+                if(map[i] != map[i-4]){
+                    //idk
+                }
+            }
+        }
         return update();
     case "KeyA":
     case "ArrowLeft":
-        console.log(event.code);
-        return update(); 
+        for(let i = 15; i >= 0; i--){  
+            if(map[i] > 0){
+
+                if(map[i+4] == 0){
+                    map[i+4] = map[i];
+                    map[i] = 0;   
+                }
+
+                if(map[i] == map[i+4]){
+                    //console.log("Power")
+                    map[i+4] = map[i+4]*3; 
+                    map[i]=0;
+                }
+
+                if(map[i] != map[i+4]){
+                    //idk
+                }
+            }
+        }
+        return update();
     case "KeyD":
     case "ArrowRight":
-        console.log(event.code);
-        return update(); 
+        for(let i = 15; i >= 0; i--){  
+            if(map[i] > 0){
+
+                if(map[i+4] == 0){
+                    map[i+4] = map[i];
+                    map[i] = 0;   
+                }
+
+                if(map[i] == map[i+4]){
+                    //console.log("Power")
+                    map[i+4] = map[i+4]*3; 
+                    map[i]=0;
+                }
+
+                if(map[i] != map[i+4]){
+                    //idk
+                }
+            }
+        }
+        return update();
     }
 
 });
