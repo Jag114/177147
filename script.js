@@ -10,6 +10,7 @@ function wynik(){//count score
 
 function update(){ //generate,update map
 
+    let scoreCount = document.getElementById("top");
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
     console.log("Update2: ",rand1, rand2)
@@ -31,6 +32,7 @@ function update(){ //generate,update map
         if(map[rand] == 0){
             map[rand] = 3;
             console.table("Wynik > 6: ",wynik());
+            scoreCount.innerText = "Score: "+wynik();
             return getValue(), checkMap();
         }
     }
@@ -43,9 +45,9 @@ function update(){ //generate,update map
             map[rand1] = 3;
             map[rand2] = 3;
             console.table("Wynik < 6: ",wynik());
+            scoreCount.innerText = "Score: "+wynik();
             return getValue(), checkMap();
         }
-    
 }
 
 document.addEventListener("keydown",function move(event){ //take input and modify map accordingly
