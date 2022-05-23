@@ -97,44 +97,44 @@ switch(event.code) {
     case "KeyA":
     case "ArrowLeft":
         for(let i = 15; i >= 0; i--){  
-            if(map[i] > 0){
-
-                if(map[i+4] == 0){
-                    map[i+4] = map[i];
-                    map[i] = 0;   
-                }
-
-                if(map[i] == map[i+4]){
-                    //console.log("Power")
-                    map[i+4] = map[i+4]*3; 
-                    map[i]=0;
-                }
-
-                if(map[i] != map[i+4]){
-                    //idk
-                }
+            if(i != 0 && i != 4 && i != 8 && i != 12){
+                if(map[i] > 0){
+                    if(map[i-1] == 0){
+                        map[i-1] = map[i];
+                        map[i] = 0;     
+                    }
+    
+                    if(map[i] == map[i-1]){
+                        map[i-1] = map[i-1]*3; 
+                        map[i]=0;
+                    }
+    
+                    if(map[i] != map[i-1]){
+                        console.log("idk");
+                    }
+                }  
             }
         }
         return update();
     case "KeyD":
     case "ArrowRight":
-        for(let i = 15; i >= 0; i--){  
-            if(map[i] > 0){
-
-                if(map[i+4] == 0){
-                    map[i+4] = map[i];
-                    map[i] = 0;   
-                }
-
-                if(map[i] == map[i+4]){
-                    //console.log("Power")
-                    map[i+4] = map[i+4]*3; 
-                    map[i]=0;
-                }
-
-                if(map[i] != map[i+4]){
-                    //idk
-                }
+        for(let i = 0; i <= map.length; i++){  
+            if(i != 3 && i != 7 && i != 11 && i != 15){
+                if(map[i] > 0){
+                    if(map[i+1] == 0){
+                        map[i+1] = map[i];
+                        map[i] = 0;     
+                    }
+    
+                    if(map[i] == map[i+1]){
+                        map[i+1] = map[i+1]*3; 
+                        map[i]=0;
+                    }
+    
+                    if(map[i] != map[i+1]){
+                        console.log("idk");
+                    }
+                }  
             }
         }
         return update();
