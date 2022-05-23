@@ -54,7 +54,7 @@ document.addEventListener("keydown",function move(event){ //take input and modif
 switch(event.code) {
     case "KeyS":
     case "ArrowDown":
-        for(let i = 15; i >= 0; i--){  
+        for(let i = 0; i <= map.length; i++){  
             if(map[i] > 0){
 
                 if(map[i+4] == 0){
@@ -76,7 +76,7 @@ switch(event.code) {
         return update();
     case "KeyW":
     case "ArrowUp":
-        for(let i = 0; i <= map.length; i++){  
+        for(let i = 15; i >= 0; i--){  
             if(map[i] > 0){
 
                 if(map[i-4] == 0){
