@@ -26,13 +26,14 @@ function update(){ //generate,update map
         return update();
     }
 
-    if(wynik()>6){
+    if(wynik()>=6){
         let rand = Math.floor(Math.random() * (16 - 0));
         console.log("Update: ",rand)
         if(map[rand] == 0){
             map[rand] = 3;
-            console.table("Wynik > 6: ",wynik());
+            console.table("Wynik >= 6: ",wynik());
             scoreCount.innerText = "Score: "+wynik();
+            animate(rand);
             return getValue(), checkMap();
         }
     }
@@ -44,8 +45,9 @@ function update(){ //generate,update map
         }else{
             map[rand1] = 3;
             map[rand2] = 3;
-            console.table("Wynik < 6: ",wynik());
+            console.log("Wynik < 6: ",wynik());
             scoreCount.innerText = "Score: "+wynik();
+            animate(rand1,rand2)
             return getValue(), checkMap();
         }
 }
@@ -168,5 +170,17 @@ function getValue(){ //get value from map[] and put it into box
             box.innerText = " ";
         }
     }
+}
+
+function animate(id1, id2=16){
+    let id = null;
+    const elem1 = document.getElementById(id1);   
+    const elem2 = document.getElementById(id2);  
+    clearInterval(id);
+    id = setInterval(frame, 5);
+    function frame() {
+        elem1.style.backgroundColor = "red"; 
+        elem2.style.backgroundColor = "red";   
+  }
 }
 

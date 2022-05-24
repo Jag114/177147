@@ -9,6 +9,8 @@ body{
     border-color: black;
     text-align: center;
     background-color: teal;
+    animation-duration: 1s;
+    animation-name: appear;
 }
 
 .row{
@@ -21,4 +23,14 @@ body{
     height: 10%;
     width: 100%;
     background-color: aquamarine;
+}
+
+@keyframes appear{
+    from{
+        background-color: white;
+    }
+
+    to{
+        background-color: teal;
+    }
 }
