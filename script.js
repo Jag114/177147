@@ -1,3 +1,8 @@
+//TODO
+//move() function
+//save map[] state to local storage or sth
+//add animations
+
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
 var arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
@@ -29,7 +34,7 @@ function update(){ //generate,update map
         }
         return update();
     }
-
+    
     if(wynik()>=6){
         let rand = Math.floor(Math.random() * (16 - 0));
         console.log("Update: ",rand)
@@ -61,6 +66,14 @@ switch(event.code) {                                      // 1st check if same p
     case "KeyS":
     case "ArrowDown":
         arrS.forEach(e => {
+            if(map[e] == map[e+12]){
+                map[e+12] = map[e+12]*3; 
+                map[e]=0;
+            }
+            if(map[e] == map[e+8]){
+                map[e+8] = map[e+8]*3; 
+                map[e]=0;
+            }
             if(map[e] == map[e+4]){
                 map[e+4] = map[e+4]*3; 
                 map[e]=0;
@@ -82,6 +95,14 @@ switch(event.code) {                                      // 1st check if same p
     case "KeyW":
     case "ArrowUp":
         arrW.forEach(e => {
+            if(map[e] == map[e-12]){
+                map[e-12] = map[e-12]*3; 
+                map[e]=0;
+            }
+            if(map[e] == map[e+8]){
+                map[e-8] = map[e-8]*3; 
+                map[e]=0;
+            }
             if(map[e] == map[e-4]){
                 map[e-4] = map[e-4]*3; 
                 map[e]=0;
