@@ -8,6 +8,7 @@ var arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
 var arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
 var arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
 var arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
+var mapState = [];
 
 function wynik(){//count score
     var suma = 0;
@@ -22,7 +23,7 @@ function update(){ //generate,update map
     let scoreCount = document.getElementById("top");
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
-    console.log("Update2: ",rand1, rand2)
+    //console.log("Update2: ",rand1, rand2)
     if(map[rand1] != 0 || map[rand2] != 0){
         let check = checkMap();
         if(check == 0){
@@ -37,12 +38,14 @@ function update(){ //generate,update map
     
     if(wynik()>=6){
         let rand = Math.floor(Math.random() * (16 - 0));
-        console.log("Update: ",rand)
+        //console.log("Update: ",rand)
         if(map[rand] == 0){
             map[rand] = 3;
-            console.table("Wynik >= 6: ",wynik());
+            //console.table("Wynik >= 6: ",wynik());
             scoreCount.innerText = "Score: "+wynik();
             //animate(rand);
+            mapState.push(map);
+            //localStorage.setItem("mapState", mapState);
             return getValue(), checkMap();
         }
     }
@@ -54,7 +57,7 @@ function update(){ //generate,update map
         }else{
             map[rand1] = 3;
             map[rand2] = 3;
-            console.log("Wynik < 6: ",wynik());
+            //console.log("Wynik < 6: ",wynik());
             scoreCount.innerText = "Score: "+wynik();
             //animate(rand1,rand2)
             return getValue(), checkMap();
@@ -66,11 +69,11 @@ switch(event.code) {                                      // 1st check if same p
     case "KeyS":
     case "ArrowDown":
         arrS.forEach(e => {
-            if(map[e] == map[e+12]){
+            if(map[e] == map[e+12] && map[e+8] == 0 & map[e+4] == 0){
                 map[e+12] = map[e+12]*3; 
                 map[e]=0;
             }
-            if(map[e] == map[e+8]){
+            if(map[e] == map[e+8] & map[e+4] == 0){
                 map[e+8] = map[e+8]*3; 
                 map[e]=0;
             }
@@ -95,11 +98,11 @@ switch(event.code) {                                      // 1st check if same p
     case "KeyW":
     case "ArrowUp":
         arrW.forEach(e => {
-            if(map[e] == map[e-12]){
+            if(map[e] == map[e-12] && map[e-8] == 0 & map[e-4] == 0){
                 map[e-12] = map[e-12]*3; 
                 map[e]=0;
             }
-            if(map[e] == map[e+8]){
+            if(map[e] == map[e-8] & map[e-4] == 0){
                 map[e-8] = map[e-8]*3; 
                 map[e]=0;
             }
@@ -129,6 +132,14 @@ switch(event.code) {                                      // 1st check if same p
                     map[e-1] = map[e-1]*3; 
                     map[e]=0;
                 }
+                if(map[e] == map[e-2] & map[e-1] == 0){
+                    map[e-2] = map[e-2]*3; 
+                    map[e]=0;
+                }
+                if(map[e] == map[e-3] & map[e-2] == 0 & map[e-1] == 0){
+                    map[e-3] = map[e-3]*3; 
+                    map[e]=0;
+                }
             }
         });
         for(let i = 15; i >= 0; i--){  
@@ -151,6 +162,14 @@ switch(event.code) {                                      // 1st check if same p
             if(e != 3 && e != 7 && e != 11 && e != 15){
                 if(map[e] == map[e+1]){
                     map[e+1] = map[e+1]*3; 
+                    map[e]=0;
+                }
+                if(map[e] == map[e+2] & map[e+1] == 0){
+                    map[e+2] = map[e+2]*3; 
+                    map[e]=0;
+                }
+                if(map[e] == map[e+3] & map[e+2] == 0 & map[e+1] == 0){
+                    map[e+3] = map[e+3]*3; 
                     map[e]=0;
                 }
             }
@@ -182,7 +201,7 @@ function checkMap(){ //check if there are empy spaces on map
         }
     });
     if(i >= 15){
-        console.log("Game Over")
+        console.error("Game Over")
         return 0;
     }
 }
