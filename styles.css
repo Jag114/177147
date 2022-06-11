@@ -1,28 +1,35 @@
 body{
     font-size: 40px;
-    font-weight: bold;;
+    font-weight: bold;
+    background-color: #faf8ef;
 }
 
 .box{
     height: 100%;
     border-style:solid;
-    border-color: black;
+    border-color: #bbada0;
+    border-width: 15px;
     text-align: center;
-    background-color: teal;
+    background-color: #cdc1b4;
     animation-duration: 1s;
-    animation-name: appear;
+    color: #776e65;
+   /* animation-name: appear;*/
 }
 
-.row{
-    width: 200px;
-    height: 200px;
+.col{
+    width: 180px;
+    height: 150px;
     float: left;
+}
+
+.col:nth-last-of-type(){
+    border-bottom: black;
 }
 
 .top-bar{
     height: 10%;
     width: 100%;
-    background-color: aquamarine;
+    background-color: #faf8ef;
 }
 
 @keyframes appear{
@@ -31,6 +38,6 @@ body{
     }
 
     to{
-        background-color: teal;
+        background-color: #cdc1b4;
     }
 }
