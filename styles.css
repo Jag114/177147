@@ -15,15 +15,14 @@ h1{
     border-color: #bbada0;
     border-width: 15px;
     text-align: center;
-    background-color: #cdc1b4;
+    padding-top: 40px;
     animation-duration: 1s;
-    color: #776e65;
     /*animation-name: appear;*/
 }
 
 .col{
-    width: 180px;
-    height: 150px;
+    width: 160px;
+    height: 90px;
     float: left;
 }
 
@@ -35,6 +34,19 @@ h1{
     height: 10%;
     width: 100%;
     background-color: #faf8ef;
+}
+
+.button{
+    background-color: #8f7a66;
+    border-style:solid;
+    border-radius: 3px;
+    border-color: #8f7a66;
+    color: #f9f6f2;
+    width: 175px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 @keyframes appear{

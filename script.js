@@ -263,36 +263,47 @@ function getValue(){ //get value from map[] and put it into box
                 break;
             case 3:
                 box.style.backgroundColor = "#eee4da";
+                box.style.color = "#776e65";
                 break;
             case 9:
                 box.style.backgroundColor = "#eee1c9";
+                box.style.color = "#776e65";
                 break;
             case 27:
                 box.style.backgroundColor = "#f3b27a";
+                box.style.color = "#f9f6f2"
                 break;
             case 81:
                 box.style.backgroundColor = "#f69664";
+                box.style.color = "#f9f6f2"
                 break;
             case 243:
                 box.style.backgroundColor = "#f67c5f";
+                box.style.color = "#f9f6f2"
                 break;
             case 729:
                 box.style.backgroundColor = "#f65e3b";
+                box.style.color = "#f9f6f2"
                 break;
             case 2187:
                 box.style.backgroundColor = "#edcf72";
+                box.style.color = "#f9f6f2"
                 break;
             case 6561:
                 box.style.backgroundColor = "#edcc61";
+                box.style.color = "#f9f6f2"
                 break;
             case 19683:
                 box.style.backgroundColor = "#edc850";
+                box.style.color = "#f9f6f2"
                 break;
             case 59049:
                 box.style.backgroundColor = "#edc53f";
+                box.style.color = "#f9f6f2"
                 break;
             case 177147:
                 box.style.backgroundColor = "#edc22e";
+                box.style.color = "#f9f6f2"
                 break;
         }
 
