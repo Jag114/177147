@@ -92,6 +92,11 @@ h1{
     font-weight: bold;
 }
 
+.intro{
+    color: #776e65;
+    font-weight: normal;
+}
+
 @keyframes appear{
     from{
         background-color: white;

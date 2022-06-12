@@ -1,11 +1,12 @@
 //TODO
-//move() function, uncover and fix bugs
+//move() function, uncover and fix bugs 
 //save map[] state to local storage or sth so it can be reloaded when user closes browser
 //add animations: 1.for spawning 2.for moving
 //mobile support
 //update for 1 box need to check its near boxes whether they are empty or not
-//css
+//css, wider numbers
 //change score counting
+//change game over
 
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
@@ -173,20 +174,24 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowLeft":
         console.log(event.code)
         arrA.forEach(e => {
-            if(e != 0 && e != 4 && e != 8 && e != 12){
+            if(e != 4 && e != 8 && e != 12){
                 if(map[e] == map[e-1]){
                     map[e-1] = map[e-1]*3; 
                     map[e]=0;
                 }
-                if(map[e] == map[e-2] & map[e-1] == 0){
-                    map[e-2] = map[e-2]*3; 
-                    map[e]=0;
+                if(e != 5 && e != 9 && e != 13){
+                    if(map[e] == map[e-2] & map[e-1] == 0){
+                        map[e-2] = map[e-2]*3; 
+                        map[e]=0;
+                    }
+                    if(e != 6 && e != 10 && e != 14){
+                        if(map[e] == map[e-3] & map[e-2] == 0 & map[e-1] == 0){
+                            map[e-3] = map[e-3]*3; 
+                            map[e]=0;
+                        }
+                    }
                 }
-                if(map[e] == map[e-3] & map[e-2] == 0 & map[e-1] == 0){
-                    map[e-3] = map[e-3]*3; 
-                    map[e]=0;
-                }
-            }
+            }      
         });
         for(let x = 0; x < 3; x++){
             for(let i = 15; i >= 0; i--){  
@@ -208,20 +213,26 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowRight":
         console.log(event.code)
         arrD.forEach(e => {
-            if(e != 3 && e != 7 && e != 11 && e != 15){
+            if(e != 3 && e != 7 && e != 11){
                 if(map[e] == map[e+1]){
                     map[e+1] = map[e+1]*3; 
                     map[e]=0;
                 }
-                if(map[e] == map[e+2] & map[e+1] == 0){
-                    map[e+2] = map[e+2]*3; 
-                    map[e]=0;
-                }
-                if(map[e] == map[e+3] & map[e+2] == 0 & map[e+1] == 0){
-                    map[e+3] = map[e+3]*3; 
-                    map[e]=0;
+                if(e != 2 && e != 6 && e != 10){
+                    if(map[e] == map[e+2] & map[e+1] == 0){
+                        map[e+2] = map[e+2]*3; 
+                        map[e]=0;
+                    }
+                    if(e != 1 && e != 5 && e != 9){
+                        if(map[e] == map[e+3] & map[e+2] == 0 & map[e+1] == 0){
+                            map[e+3] = map[e+3]*3; 
+                            map[e]=0;
+                        }
+                    }
                 }
             }
+            
+            
         });
         for(let x = 0; x < 3; x++){
             for(let i = 0; i <= map.length; i++){  
