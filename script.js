@@ -66,8 +66,8 @@ function update(){ //generate,update map
             map[rand2] = 3;
             //console.log("Wynik < 6: ",wynik());
             let scores = wynik();
-            scoreCount.innerText = "Score: "+scores.score;
-            scoreHigh.innerText = "Highscore: "+scores.highscore;
+            scoreCount.innerText = scores.score;
+            scoreHigh.innerText = scores.highscore;
             //animate(rand1,rand2)
             firstUpdate = false;
             return getValue(), checkMap();
@@ -91,8 +91,8 @@ function update(){ //generate,update map
                 " " + "-" + " " + "-" + " " + "-" + " " + "-" 
             )
             let scores = wynik();
-            scoreCount.innerText = "Score: "+scores.score;
-            scoreHigh.innerText = "Highscore: "+scores.highscore;
+            scoreCount.innerText = scores.score;
+            scoreHigh.innerText = scores.highscore;
             //animate(rand);
             mapState = [];
             mapState.push(map);
@@ -107,6 +107,7 @@ document.addEventListener("keydown",function move(event){ //take input and modif
 switch(event.code) {                                      // 1st check if same powers,then check if empty
     case "KeyS":
     case "ArrowDown":
+        console.log(event.code)
         arrS.forEach(e => {
             if(map[e] == map[e+12] && map[e+8] == 0 & map[e+4] == 0){
                 map[e+12] = map[e+12]*3; 
@@ -138,6 +139,7 @@ switch(event.code) {                                      // 1st check if same p
         return update();
     case "KeyW":
     case "ArrowUp":
+        console.log(event.code)
         arrW.forEach(e => {
             if(map[e] == map[e-12] && map[e-8] == 0 & map[e-4] == 0){
                 map[e-12] = map[e-12]*3; 
@@ -169,6 +171,7 @@ switch(event.code) {                                      // 1st check if same p
         return update();
     case "KeyA":
     case "ArrowLeft":
+        console.log(event.code)
         arrA.forEach(e => {
             if(e != 0 && e != 4 && e != 8 && e != 12){
                 if(map[e] == map[e-1]){
@@ -203,6 +206,7 @@ switch(event.code) {                                      // 1st check if same p
         return update();
     case "KeyD":
     case "ArrowRight":
+        console.log(event.code)
         arrD.forEach(e => {
             if(e != 3 && e != 7 && e != 11 && e != 15){
                 if(map[e] == map[e+1]){
@@ -323,16 +327,16 @@ function getValue(){ //get value from map[] and put it into box
 #3c3a32 8192 (make it darker)
 */
 
-function animate(id1, id2=16){
-    let id = null;
-    const elem1 = document.getElementById(id1);   
-    const elem2 = document.getElementById(id2);  
-    clearInterval(id);
-    id = setInterval(frame, 5);
-    function frame() {
-        elem1.style.backgroundColor = "red"; 
-        elem2.style.backgroundColor = "red";   
-  }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function animate(e){
+    let box = document.getElementById(e);
+    let defaultColor = box.style.backgroundColor;
+    box.style.backgroundColor = "red"
+    await sleep(1000);
+    box.style.backgroundColor = defaultColor;
 }
 
 function reset(){
