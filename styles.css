@@ -2,6 +2,11 @@ body{
     font-size: 40px;
     font-weight: bold;
     background-color: #faf8ef;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+h1{
+    color: #776e65;
 }
 
 .box{
@@ -13,7 +18,7 @@ body{
     background-color: #cdc1b4;
     animation-duration: 1s;
     color: #776e65;
-   /* animation-name: appear;*/
+    /*animation-name: appear;*/
 }
 
 .col{

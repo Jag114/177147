@@ -1,10 +1,11 @@
 //TODO
-//move() function 
+//move() function, uncover and fix bugs
 //save map[] state to local storage or sth so it can be reloaded when user closes browser
 //add animations: 1.for spawning 2.for moving
 //mobile support
 //update for 1 box need to check its near boxes whether they are empty or not
 //css
+//change score counting
 
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
@@ -12,7 +13,7 @@ var arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
 var arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
 var arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
 var mapState = [];
-let firstUpdate = true;
+var firstUpdate = true;
 
 function wynik(){//count score
     var suma = 0;
@@ -31,7 +32,13 @@ function wynik(){//count score
 }
 
 function update(){ //generate,update map
-
+   /*
+    if(localStorage.getItem("mapState")){
+        let save = JSON.parse(localStorage.mapState);
+        firstUpdate = false;
+        map = save.slice();
+    }
+   */
     let scoreCount = document.getElementById("scoreNow");
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
@@ -87,10 +94,11 @@ function update(){ //generate,update map
             scoreCount.innerText = "Score: "+scores.score;
             scoreHigh.innerText = "Highscore: "+scores.highscore;
             //animate(rand);
-            //mapState.push(map);
-            //localStorage.setItem("mapState", mapState);
+            mapState = [];
+            mapState.push(map);
+            localStorage.mapState = JSON.stringify(mapState);
             return getValue(), checkMap();
-        }
+        }else {return update()}
 
        
 }
@@ -113,15 +121,17 @@ switch(event.code) {                                      // 1st check if same p
                 map[e]=0;
             }
         });
-        for(let i = 0; i <= map.length; i++){  
-            if(map[i] > 0){
-
-                if(map[i+4] == 0){
-                    map[i+4] = map[i];
-                    map[i] = 0;   
-                }
-                if(map[i] != map[i+4]){
-                    console.log("idk");
+        for(let x = 0; x < 3; x++){
+            for(let i = 0; i <= map.length; i++){  
+                if(map[i] > 0){
+    
+                    if(map[i+4] == 0){
+                        map[i+4] = map[i];
+                        map[i] = 0;   
+                    }
+                    if(map[i] != map[i+4]){
+                        console.log("idk");
+                    }
                 }
             }
         }
@@ -142,15 +152,17 @@ switch(event.code) {                                      // 1st check if same p
                 map[e]=0;
             }
         });
-        for(let i = 15; i >= 0; i--){  
-            if(map[i] > 0){
-
-                if(map[i-4] == 0){
-                    map[i-4] = map[i];
-                    map[i] = 0;   
-                }
-                if(map[i] != map[i-4]){
-                    console.log("idk");
+        for(let x = 0; x < 3; x++){
+            for(let i = 15; i >= 0; i--){  
+                if(map[i] > 0){
+    
+                    if(map[i-4] == 0){
+                        map[i-4] = map[i];
+                        map[i] = 0;   
+                    }
+                    if(map[i] != map[i-4]){
+                        console.log("idk");
+                    }
                 }
             }
         }
@@ -173,17 +185,19 @@ switch(event.code) {                                      // 1st check if same p
                 }
             }
         });
-        for(let i = 15; i >= 0; i--){  
-            if(i != 0 && i != 4 && i != 8 && i != 12){
-                if(map[i] > 0){
-                    if(map[i-1] == 0){
-                        map[i-1] = map[i];
-                        map[i] = 0;     
-                    }
-                    if(map[i] != map[i-1]){
-                        console.log("idk");
-                    }
-                }  
+        for(let x = 0; x < 3; x++){
+            for(let i = 15; i >= 0; i--){  
+                if(i != 0 && i != 4 && i != 8 && i != 12){
+                    if(map[i] > 0){
+                        if(map[i-1] == 0){
+                            map[i-1] = map[i];
+                            map[i] = 0;     
+                        }
+                        if(map[i] != map[i-1]){
+                            console.log("idk");
+                        }
+                    }  
+                }
             }
         }
         return update();
@@ -205,17 +219,19 @@ switch(event.code) {                                      // 1st check if same p
                 }
             }
         });
-        for(let i = 0; i <= map.length; i++){  
-            if(i != 3 && i != 7 && i != 11 && i != 15){
-                if(map[i] > 0){
-                    if(map[i+1] == 0){
-                        map[i+1] = map[i];
-                        map[i] = 0;     
-                    } 
-                    if(map[i] != map[i+1]){
-                        console.log("idk");
-                    }
-                }  
+        for(let x = 0; x < 3; x++){
+            for(let i = 0; i <= map.length; i++){  
+                if(i != 3 && i != 7 && i != 11 && i != 15){
+                    if(map[i] > 0){
+                        if(map[i+1] == 0){
+                            map[i+1] = map[i];
+                            map[i] = 0;     
+                        } 
+                        if(map[i] != map[i+1]){
+                            console.log("idk");
+                        }
+                    }  
+                }
             }
         }
         return update();
@@ -233,6 +249,7 @@ function checkMap(){ //check if there are empy spaces on map
     });
     if(i >= 15){
         console.error("Game Over")
+        localStorage.setItem("mapState",[]);
         return 0;
     }
 }
@@ -240,57 +257,60 @@ function checkMap(){ //check if there are empy spaces on map
 function getValue(){ //get value from map[] and put it into box
     for(let e = 0; e<map.length;e++){
         let box = document.getElementById(e);
-        if(map[e] == 0){
-            box.style.backgroundColor = "#cdc1b4"; console.log("TEST")
+        switch (map[e]) {
+            case 0:
+                box.style.backgroundColor = "#cdc1b4";
+                break;
+            case 3:
+                box.style.backgroundColor = "#eee4da";
+                break;
+            case 9:
+                box.style.backgroundColor = "#eee1c9";
+                break;
+            case 27:
+                box.style.backgroundColor = "#f3b27a";
+                break;
+            case 81:
+                box.style.backgroundColor = "#f69664";
+                break;
+            case 243:
+                box.style.backgroundColor = "#f67c5f";
+                break;
+            case 729:
+                box.style.backgroundColor = "#f65e3b";
+                break;
+            case 2187:
+                box.style.backgroundColor = "#edcf72";
+                break;
+            case 6561:
+                box.style.backgroundColor = "#edcc61";
+                break;
+            case 19683:
+                box.style.backgroundColor = "#edc850";
+                break;
+            case 59049:
+                box.style.backgroundColor = "#edc53f";
+                break;
+            case 177147:
+                box.style.backgroundColor = "#edc22e";
+                break;
         }
+
         if(map[e] > 0){ 
             box.innerText = map[e];
-            if(map[e] == 3){
-                box.style.backgroundColor = "#eee4da";
-            }
-            if(map[e] == 9){
-                box.style.backgroundColor = "#eee1c9";
-            }
-            if(map[e] == 27){
-                box.style.backgroundColor = "#f3b27a";
-            }
-            if(map[e] == 81){
-                box.style.backgroundColor = "#f69664";
-            }
-            if(map[e] == 243){
-                box.style.backgroundColor = "#f67c5f";
-            }
-            if(map[e] == 729){
-                box.style.backgroundColor = "#f65e3b";
-            }
-            if(map[e] == 2187){
-                box.style.backgroundColor = "#edcf72";
-            }
-            if(map[e] == 6561){ //256
-                box.style.backgroundColor = "#edcc61";
-            }
-            if(map[e] == 19683){
-                box.style.backgroundColor = "#edc850";
-            }
-            if(map[e] == 59049){
-                box.style.backgroundColor = "#edc53f";
-            }
-            if(map[e] == 177147){
-                box.style.backgroundColor = "#edc22e";
-            }
-            /*
-            #edcc61 256
-            #edc850 512
-            #edc53f 1024
-            #edc22e 2048
-            #3c3a32 4096
-            #3c3a32 8192 (make it darker)
-            */
         }else{
             box.innerText = " ";
         }
     }
 }
+/*
+#edcc61 256
+#edc850 512
+#edc53f 1024
+#edc22e 2048
+#3c3a32 4096
+#3c3a32 8192 (make it darker)
+*/
 
 function animate(id1, id2=16){
     let id = null;
@@ -302,5 +322,12 @@ function animate(id1, id2=16){
         elem1.style.backgroundColor = "red"; 
         elem2.style.backgroundColor = "red";   
   }
+}
+
+function reset(){
+    map.fill(0);
+    getValue();
+    firstUpdate = true;
+    return update();
 }
 
