@@ -357,10 +357,16 @@ function reset(){
     return update();
 }
 
-function scrollTop(){
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    console.log("test2")
+  function scrollTop(){
+    window.scrollTo({
+        top:0,
+        left:0,
+        behavior: "smooth"
+    })
+}
+
+function scrollBot(){
+    return 0;
 }
 
 function alert() {
