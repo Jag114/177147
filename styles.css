@@ -10,6 +10,18 @@ h1{
     float:left;
 }
 
+a{
+    color: #776e65;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+hr{
+    margin:30px 0px 30px 0px;
+}
+
 .box{
     height: 100%;
     border-style:solid;
@@ -44,8 +56,8 @@ h1{
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    margin-bottom: 20px;
-    margin-left: 465px;
+    margin-bottom: 70px;
+    margin-left: 240px;
 }
 
 .scoreDiv{
@@ -95,6 +107,21 @@ h1{
 .intro{
     color: #776e65;
     font-weight: normal;
+    font-size: 18px;
+    float: left;
+    margin-bottom: 60px;
+}
+
+.howToPlay{
+    color: #776e65;
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 700px;
+    width: 650px;
+}
+
+.main{
+    margin:0px 33% 0px 33%;
 }
 
 @keyframes appear{

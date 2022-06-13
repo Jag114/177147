@@ -1,7 +1,7 @@
 //TODO
 //move() function, uncover and fix bugs 
 //save map[] state to local storage or sth so it can be reloaded when user closes browser
-//add animations: 1.for spawning 2.for moving
+//add animations: 1.for spawning 2.for moving 3.for scrollTop
 //mobile support
 //update for 1 box need to check its near boxes whether they are empty or not
 //css, wider numbers
@@ -355,5 +355,17 @@ function reset(){
     getValue();
     firstUpdate = true;
     return update();
+}
+
+function scrollTop(){
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    console.log("test2")
+}
+
+function alert() {
+    console.log("test")
+    alert("There are no version for mobile phones");
+    return 0;
 }
 
