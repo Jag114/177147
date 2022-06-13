@@ -360,18 +360,19 @@ function reset(){
   function scrollTop(){
     window.scrollTo({
         top:0,
-        left:0,
         behavior: "smooth"
     })
 }
 
 function scrollBot(){
-    return 0;
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    })
 }
 
-function alert() {
-    console.log("test")
-    alert("There are no version for mobile phones");
+function platforms() {
+    alert("There is no version for mobile devices");
     return 0;
 }
 

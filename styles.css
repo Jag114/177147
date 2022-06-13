@@ -20,6 +20,8 @@ a{
 
 hr{
     margin:30px 0px 30px 0px;
+    border-bottom: 1px solid #d8d4d0;
+    color: #776e65;
 }
 
 .box{
@@ -67,7 +69,7 @@ hr{
 }
 
 .scoreCount, .scoreBest{
-    font-size: 18px;
+    font-size: 20px;
     background-color: #bbada0;
     width: 66px;
     height: 55px;
@@ -118,6 +120,7 @@ hr{
     font-weight: normal;
     margin-top: 700px;
     width: 650px;
+    margin-bottom: 200px;
 }
 
 .main{
