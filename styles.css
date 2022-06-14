@@ -124,7 +124,8 @@ hr{
 }
 
 .main{
-    margin:0px 33% 0px 33%;
+    margin:0px max(33%) 0px max(33%);
+    position: absolute;
 }
 
 @keyframes appear{

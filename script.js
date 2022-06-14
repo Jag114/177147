@@ -31,15 +31,19 @@ function wynik(){//count score
         'highscore':bestSuma
     };
 }
-
-function update(){ //generate,update map
-   /*
+/*
+function checkSave(){
     if(localStorage.getItem("mapState")){
-        let save = JSON.parse(localStorage.mapState);
+        let save = JSON.parse(localStorage.getItem("mapState"));
         firstUpdate = false;
         map = save.slice();
+        console.table(map)
+        return map;
     }
-   */
+}
+*/
+function update(){ //generate,update map
+
     let scoreCount = document.getElementById("scoreNow");
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
@@ -65,7 +69,6 @@ function update(){ //generate,update map
         }else{
             map[rand1] = 3;
             map[rand2] = 3;
-            //console.log("Wynik < 6: ",wynik());
             let scores = wynik();
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
@@ -79,8 +82,6 @@ function update(){ //generate,update map
         console.log("Update: ",rand)
         if(map[rand] == 0){
             map[rand] = 3;
-            //console.log("Wynik >= 6: ",wynik());
-            //console.table(map);
             console.log(
                 "|" + map[0] + "|" + map[1] + "|" + map[2] + "|" + map[3] + "|\n" +
                 " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
@@ -254,6 +255,12 @@ switch(event.code) {                                      // 1st check if same p
 
 });
 
+window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+});
+
 function checkMap(){ //check if there are empy spaces on map
 
     let i = 0;
@@ -357,7 +364,7 @@ function reset(){
     return update();
 }
 
-  function scrollTop(){
+function scrollTop(){
     window.scrollTo({
         top:0,
         behavior: "smooth"
@@ -366,7 +373,7 @@ function reset(){
 
 function scrollBot(){
     window.scrollTo({
-        top: document.body.scrollHeight,
+        top: 1000,//document.body.scrollHeight,
         behavior: "smooth"
     })
 }
