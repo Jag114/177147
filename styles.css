@@ -38,6 +38,25 @@ hr{
     padding-top: 40px;
 }
 
+.box_animate{
+    height: 100%;
+    border-style:solid;
+    border-color: #bbada0;
+    border-width: 15px;
+    text-align: center;
+    padding-top: 40px;
+    animation: explain_animation 1s ease-out .1s;
+}
+
+@keyframes box_animation {
+    0% {
+        box-shadow: 1px 1px 5px 5px #f3d774;
+    }
+    100% {
+        box-shadow: 1px 1px 5px 5px transparent;
+    }
+}
+
 .col{
     width: 160px;
     height: 90px;

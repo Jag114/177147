@@ -95,7 +95,7 @@ function update(){ //generate,update map
             let scores = wynik();
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
-            //animate(rand);
+            animate(rand);
             mapState = [];
             mapState.push(map);
             localStorage.mapState = JSON.stringify(mapState);
@@ -375,19 +375,10 @@ function platforms() {
     return 0;
 }
 
-var id = null;
-function animate() {
-  var elem = document.getElementById("myAnimation");   
-  var pos = 0;
-  clearInterval(id);
-  id = setInterval(frame, 10);
-  function frame() {
-    if (pos == 350) { //if is finished
-      clearInterval(id);
-    } else {  //if isnt finished do stuff
-      pos++; 
-      elem.style.top = pos + 'px'; 
-      elem.style.left = pos + 'px'; 
-    }
-  }
+function animate(id){
+    let box = document.getElementById(id);
+    box.className = "box_animate";
+    setTimeout(function(){
+        box.className = "box";
+    }, 1100)
 }
