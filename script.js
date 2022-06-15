@@ -1,10 +1,9 @@
 //TODO
-//move() function, uncover and fix bugs 
 //save map[] state to local storage or sth so it can be reloaded when user closes browser
-//add animations: 1.for spawning 2.for moving 3.for scrollTop
+//add animations: 1.for spawning 2.for moving
 //mobile support
 //update for 1 box need to check its near boxes whether they are empty or not
-//css, wider numbers
+//css
 //change score counting
 //change game over
 
@@ -15,6 +14,7 @@ var arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
 var arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
 var mapState = [];
 var firstUpdate = true;
+var count = 0;
 
 function wynik(){//count score
     var suma = 0;
@@ -345,18 +345,6 @@ function getValue(){ //get value from map[] and put it into box
 #3c3a32 8192 (make it darker)
 */
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function animate(e){
-    let box = document.getElementById(e);
-    let defaultColor = box.style.backgroundColor;
-    box.style.backgroundColor = "red"
-    await sleep(1000);
-    box.style.backgroundColor = defaultColor;
-}
-
 function reset(){
     map.fill(0);
     getValue();
@@ -372,6 +360,10 @@ function scrollTop(){
 }
 
 function scrollBot(){
+    document.getElementById("explain").className = "explain_highlight";
+    setTimeout(function(){
+        document.getElementById("explain").className = "explain_default";
+    }, 3200)
     window.scrollTo({
         top: 1000,//document.body.scrollHeight,
         behavior: "smooth"
@@ -383,3 +375,19 @@ function platforms() {
     return 0;
 }
 
+var id = null;
+function animate() {
+  var elem = document.getElementById("myAnimation");   
+  var pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 10);
+  function frame() {
+    if (pos == 350) { //if is finished
+      clearInterval(id);
+    } else {  //if isnt finished do stuff
+      pos++; 
+      elem.style.top = pos + 'px'; 
+      elem.style.left = pos + 'px'; 
+    }
+  }
+}

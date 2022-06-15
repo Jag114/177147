@@ -24,6 +24,11 @@ hr{
     color: #776e65;
 }
 
+.main{
+    margin:0px max(33%) 0px max(33%);
+    position: absolute;
+}
+
 .box{
     height: 100%;
     border-style:solid;
@@ -31,8 +36,6 @@ hr{
     border-width: 15px;
     text-align: center;
     padding-top: 40px;
-    animation-duration: 1s;
-    /*animation-name: appear;*/
 }
 
 .col{
@@ -43,7 +46,7 @@ hr{
 
 .top-bar{
     height: 200px;
-    width: 640px;
+    width: max-content;
     background-color: #faf8ef;
 }
 
@@ -64,14 +67,15 @@ hr{
 
 .scoreDiv{
     float:left;
-    margin-left: 221px;
+    margin-left: 469px;
     margin-top: 60px;
+    position: absolute;
 }
 
 .scoreCount, .scoreBest{
     font-size: 20px;
     background-color: #bbada0;
-    width: 66px;
+    width: min-content;
     height: 55px;
     float:left;
     margin:5px;
@@ -87,7 +91,7 @@ hr{
     text-transform: uppercase;
     text-align: center;
     padding-right: 20px;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-bottom: 8px;
     font-size: 13px;
     font-weight: bold;
@@ -100,7 +104,7 @@ hr{
     text-transform: uppercase;
     text-align: center;
     padding-right: 20px;
-    padding-left: 15px;
+    padding-left: 20px;
     padding-bottom: 8px;
     font-size: 13px;
     font-weight: bold;
@@ -121,19 +125,24 @@ hr{
     margin-top: 700px;
     width: 650px;
     margin-bottom: 200px;
+    background-color: #faf8ef;
 }
 
-.main{
-    margin:0px max(33%) 0px max(33%);
-    position: absolute;
+.explain_highlight{
+    animation: explain_animation 3s ease-in .2s;
 }
 
-@keyframes appear{
-    from{
-        background-color: white;
+.explain_default{
+    background-color: #faf8ef;
+}
+
+@keyframes explain_animation {
+    0% {
+      background-color: #f3d774;
+      box-shadow: 0 0 0 15px #f3d774;
     }
-
-    to{
-        background-color: #cdc1b4;
+    100% {
+      background-color: transparent;
+      box-shadow: 0 0 0 10px transparent;
     }
 }
