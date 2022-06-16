@@ -380,5 +380,5 @@ function animate(id){
     box.className = "box_animate";
     setTimeout(function(){
         box.className = "box";
-    }, 1100)
+    }, 800)
 }

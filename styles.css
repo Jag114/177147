@@ -45,15 +45,20 @@ hr{
     border-width: 15px;
     text-align: center;
     padding-top: 40px;
-    animation: explain_animation 1s ease-out .1s;
+    animation: box_animation .7s ease-out .1s;
 }
 
 @keyframes box_animation {
+
     0% {
-        box-shadow: 1px 1px 5px 5px #f3d774;
+        background-color: #bbada0;
+        font-size: 1px;
+        color: #ffffff;
     }
+
     100% {
-        box-shadow: 1px 1px 5px 5px transparent;
+        font-size: 40px;
+        color: #776e65
     }
 }
 
