@@ -5,23 +5,21 @@
 //update for 1 box need to check its near boxes whether they are empty or not
 //css
 //change score counting
-//change game over
+//change checkMap()
 
-var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-var arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
-var arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
-var arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
-var arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
-var mapState = [];
-var firstUpdate = true;
-var count = 0;
+let map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
+let arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
+let arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
+let arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
+let mapState = [];
+let firstUpdate = true;
+let count = 0;
 
 function wynik(){//count score
-    var suma = 0;
-    var bestSuma = localStorage.getItem("highscore");
-    for (let i = 0; i < map.length; i++) {
-        suma += map[i];
-    }
+    let suma = 0;
+    let bestSuma = localStorage.getItem("highscore");
+    
     if(suma > bestSuma){
         localStorage.setItem("highscore",suma);
         bestSuma = suma;
@@ -31,17 +29,14 @@ function wynik(){//count score
         'highscore':bestSuma
     };
 }
-/*
+
 function checkSave(){
-    if(localStorage.getItem("mapState")){
-        let save = JSON.parse(localStorage.getItem("mapState"));
-        firstUpdate = false;
-        map = save.slice();
-        console.table(map)
-        return map;
-    }
+    //localStorage.setItem("mapState", JSON.stringify([3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0]));
+    map = JSON.parse(localStorage.mapState);  
+    firstUpdate = false;
+    return update(); 
 }
-*/
+
 function update(){ //generate,update map
 
     let scoreCount = document.getElementById("scoreNow");
@@ -61,7 +56,10 @@ function update(){ //generate,update map
         return update();
     }
     
-    if(firstUpdate == true){
+    if(firstUpdate == true){ 
+        if(localStorage.mapState){
+            checkSave(); console.log("test")
+        }
         let box1 = document.getElementById(rand1);
         let box2 = document.getElementById(rand2);
         if(box2 == box1){
@@ -97,8 +95,8 @@ function update(){ //generate,update map
             scoreHigh.innerText = scores.highscore;
             animate(rand);
             mapState = [];
-            mapState.push(map);
-            localStorage.mapState = JSON.stringify(mapState);
+            mapState = [...map];
+            localStorage.setItem("mapState",JSON.stringify(mapState));
             return getValue(), checkMap();
         }else {return update()}
 
@@ -269,11 +267,12 @@ function checkMap(){ //check if there are empy spaces on map
             i++;
         }
     });
-    if(i >= 15){
+    if(i > 15){
         console.error("Game Over")
-        localStorage.setItem("mapState",[]);
+        localStorage.setItem("mapState",JSON.stringify([]));
         return 0;
     }
+    return 1;
 }
 
 function getValue(){ //get value from map[] and put it into box
@@ -348,6 +347,7 @@ function getValue(){ //get value from map[] and put it into box
 function reset(){
     map.fill(0);
     getValue();
+    localStorage.setItem("mapState", []);
     firstUpdate = true;
     return update();
 }
@@ -380,5 +380,5 @@ function animate(id){
     box.className = "box_animate";
     setTimeout(function(){
         box.className = "box";
-    }, 800)
+    }, 400)
 }
