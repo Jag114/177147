@@ -19,7 +19,9 @@ let count = 0;
 function wynik(){//count score
     let suma = 0;
     let bestSuma = localStorage.getItem("highscore");
-    
+    map.forEach(e => {
+            suma += e;
+    })
     if(suma > bestSuma){
         localStorage.setItem("highscore",suma);
         bestSuma = suma;
@@ -31,10 +33,9 @@ function wynik(){//count score
 }
 
 function checkSave(){
-    //localStorage.setItem("mapState", JSON.stringify([3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0]));
     map = JSON.parse(localStorage.mapState);  
     firstUpdate = false;
-    return update(); 
+    return update(); //shouldnt return it
 }
 
 function update(){ //generate,update map
@@ -43,8 +44,9 @@ function update(){ //generate,update map
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
-    //console.log("Update2: ",rand1, rand2)
+    console.log("Update2: ",rand1, rand2)
     if(map[rand1] != 0 || map[rand2] != 0){
+        console.log("Check map")
         let check = checkMap();
         if(check == 0){
             const gameOverDiv = document.createElement("div");
@@ -57,9 +59,11 @@ function update(){ //generate,update map
     }
     
     if(firstUpdate == true){ 
+        console.log("First update, save check")
         if(localStorage.mapState){
-            checkSave(); console.log("test")
+            checkSave();
         }
+        console.log("First update, after save check")
         let box1 = document.getElementById(rand1);
         let box2 = document.getElementById(rand2);
         if(box2 == box1){
@@ -68,6 +72,7 @@ function update(){ //generate,update map
             map[rand1] = 3;
             map[rand2] = 3;
             let scores = wynik();
+            console.log("First update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             //animate(rand1,rand2)
@@ -75,10 +80,11 @@ function update(){ //generate,update map
             return getValue(), checkMap();
         }
     }
-
+    console.log("Nth update start")
     let rand = Math.floor(Math.random() * (16 - 0));
         console.log("Update: ",rand)
         if(map[rand] == 0){
+            console.log("Nth update, check if empty")
             map[rand] = 3;
             console.log(
                 "|" + map[0] + "|" + map[1] + "|" + map[2] + "|" + map[3] + "|\n" +
@@ -91,6 +97,7 @@ function update(){ //generate,update map
                 " " + "-" + " " + "-" + " " + "-" + " " + "-" 
             )
             let scores = wynik();
+            console.log("Nth update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             animate(rand);
@@ -375,10 +382,20 @@ function platforms() {
     return 0;
 }
 
-function animate(id){
-    let box = document.getElementById(id);
-    box.className = "box_animate";
+function animate(id1,id2 = id1){
+    if(arguments.length == 1){
+        let box1 = document.getElementById(id1);
+        box1.className = "box_animate";
+        setTimeout(function(){
+            box1.className = "box";
+        }, 400)
+    }
+    let box1 = document.getElementById(id1);
+    let box2 = document.getElementById(id2);
+    box1.className = "box_animate";
+    box2.className = "box_animate";
     setTimeout(function(){
-        box.className = "box";
+        box1.className = "box";
+        box2.className = "box";
     }, 400)
 }
