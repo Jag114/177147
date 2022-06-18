@@ -33,9 +33,17 @@ function wynik(){//count score
 }
 
 function checkSave(){
+    if(!localStorage.mapState) return update();
+
     map = JSON.parse(localStorage.mapState);  
     firstUpdate = false;
-    return update(); //shouldnt return it
+    let scoreCount = document.getElementById("scoreNow");
+    let scoreHigh = document.getElementById("scoreBest");
+    let scores = wynik();
+    scoreCount.innerText = scores.score;
+    scoreHigh.innerText = scores.highscore;
+    getValue();
+    return 0;
 }
 
 function update(){ //generate,update map
@@ -60,9 +68,6 @@ function update(){ //generate,update map
     
     if(firstUpdate == true){ 
         console.log("First update, save check")
-        if(localStorage.mapState){
-            checkSave();
-        }
         console.log("First update, after save check")
         let box1 = document.getElementById(rand1);
         let box2 = document.getElementById(rand2);
