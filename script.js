@@ -1,20 +1,20 @@
 //TODO
-//save map[] state to local storage or sth so it can be reloaded when user closes browser
-//add animations: 1.for spawning 2.for moving
+//add animations: 2.for moving
 //mobile support
 //update for 1 box need to check its near boxes whether they are empty or not
 //css
 //change score counting
-//change checkMap()
+//change checkMap() 
+//map = [27,0,0,0,9,0,0,0,3,0,0,0,3,0,0,0] ArrowDown nie dziala jak powinno, jesli mozliwe
 
-let map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
-let arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
-let arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
-let arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
-let mapState = [];
-let firstUpdate = true;
-let count = 0;
+var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
+const arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
+const arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
+const arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
+var mapState = [];
+var firstUpdate = true;
+var count = 0;
 
 function wynik(){//count score
     let suma = 0;
@@ -52,9 +52,9 @@ function update(){ //generate,update map
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
-    console.log("Update2: ",rand1, rand2)
+    //console.log("Update2: ",rand1, rand2)
     if(map[rand1] != 0 || map[rand2] != 0){
-        console.log("Check map")
+        //console.log("Check map")
         let check = checkMap();
         if(check == 0){
             const gameOverDiv = document.createElement("div");
@@ -67,8 +67,7 @@ function update(){ //generate,update map
     }
     
     if(firstUpdate == true){ 
-        console.log("First update, save check")
-        console.log("First update, after save check")
+        //console.log("First update, start")
         let box1 = document.getElementById(rand1);
         let box2 = document.getElementById(rand2);
         if(box2 == box1){
@@ -77,19 +76,22 @@ function update(){ //generate,update map
             map[rand1] = 3;
             map[rand2] = 3;
             let scores = wynik();
-            console.log("First update, score", scores.score, scores.highscore)
+            //console.log("First update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
-            //animate(rand1,rand2)
+            animate(rand1,rand2)
+            mapState = [];
+            mapState = [...map];
+            localStorage.setItem("mapState",JSON.stringify(mapState));
             firstUpdate = false;
             return getValue(), checkMap();
         }
     }
-    console.log("Nth update start")
+    //console.log("Nth update start")
     let rand = Math.floor(Math.random() * (16 - 0));
-        console.log("Update: ",rand)
+        //console.log("Update: ",rand)
         if(map[rand] == 0){
-            console.log("Nth update, check if empty")
+            //console.log("Nth update, check if empty")
             map[rand] = 3;
             console.log(
                 "|" + map[0] + "|" + map[1] + "|" + map[2] + "|" + map[3] + "|\n" +
@@ -102,7 +104,7 @@ function update(){ //generate,update map
                 " " + "-" + " " + "-" + " " + "-" + " " + "-" 
             )
             let scores = wynik();
-            console.log("Nth update, score", scores.score, scores.highscore)
+            //console.log("Nth update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             animate(rand);
