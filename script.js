@@ -5,7 +5,36 @@
 //css
 //change score counting
 //change checkMap() 
+//add do nothing if there is nothing to do, i.e. dont spawn new boxes
 //map = [27,0,0,0,9,0,0,0,3,0,0,0,3,0,0,0] ArrowDown nie dziala jak powinno, jesli mozliwe
+
+
+
+
+class Box {
+    constructor(movable, value){
+        this.movable = movable;
+        this.value = value;
+    }
+}
+let boxObj = new Box(true,0);
+boxObj.value = 3;
+boxObj.movable = false;
+console.log(boxObj.value, boxObj.movable)
+function makeBoxObjects(n) {
+    var boxObjects = new Array(n)
+    for (var i = 0; i < n; ++i) { //i++ crashes, idk why
+        boxObjects[i] = new Box(true,0)
+    }
+    return boxObjects
+}
+let a = makeBoxObjects(16);
+a[2].value = 3;
+console.log(a);
+
+
+
+
 
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 const arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
