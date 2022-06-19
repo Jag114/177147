@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-=======
 //TODO
 //add animations: 2.for moving
 //mobile support
@@ -10,7 +7,6 @@ var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 //change checkMap() 
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
 //map = [27,0,0,0,9,0,0,0,3,0,0,0,3,0,0,0] ArrowDown nie dziala jak powinno, jesli mozliwe
-
 
 class Box {
     constructor(movable, value){
@@ -43,7 +39,7 @@ const arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
 var mapState = [];
 var firstUpdate = true;
 var count = 0; //?
->>>>>>> Stashed changes
+
 
 function wynik(){//count score
     var suma = 0;
