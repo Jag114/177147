@@ -1,4 +1,49 @@
+<<<<<<< Updated upstream
 var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+=======
+//TODO
+//add animations: 2.for moving
+//mobile support
+//update for 1 box need to check its near boxes whether they are empty or not
+//css
+//change score counting
+//change checkMap() 
+//add do nothing if there is nothing to do, i.e. dont spawn new boxes
+//map = [27,0,0,0,9,0,0,0,3,0,0,0,3,0,0,0] ArrowDown nie dziala jak powinno, jesli mozliwe
+
+
+class Box {
+    constructor(movable, value){
+        this.movable = movable;
+        this.value = value;
+    }
+}
+let boxObj = new Box(true,0);
+boxObj.value = 3;
+boxObj.movable = false;
+console.log(boxObj.value, boxObj.movable)
+function makeBoxObjects(n) {
+    var boxObjects = new Array(n)
+    for (var i = 0; i < n; ++i) { //i++ crashes, idk why
+        boxObjects[i] = new Box(true,0)
+    }
+    return boxObjects
+}
+let a = makeBoxObjects(16);
+a[2].value = 3;
+console.log(a);
+
+
+
+var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
+const arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
+const arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
+const arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
+var mapState = [];
+var firstUpdate = true;
+var count = 0; //?
+>>>>>>> Stashed changes
 
 function wynik(){//count score
     var suma = 0;
