@@ -6,10 +6,6 @@
 //change score counting
 //change checkMap() 
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
-//map = [27,0,0,0,9,0,0,0,3,0,0,0,3,0,0,0] ArrowDown nie dziala jak powinno, jesli mozliwe
-
-
-
 
 class Box {
     constructor(movable, value){
@@ -17,26 +13,16 @@ class Box {
         this.value = value;
     }
 }
-let boxObj = new Box(true,0);
-boxObj.value = 3;
-boxObj.movable = false;
-console.log(boxObj.value, boxObj.movable)
 function makeBoxObjects(n) {
-    var boxObjects = new Array(n)
+    var mapArr = new Array(n)
     for (var i = 0; i < n; ++i) { //i++ crashes, idk why
-        boxObjects[i] = new Box(true,0)
+        mapArr[i] = new Box(true,0)
     }
-    return boxObjects
+    return mapArr;
 }
-let a = makeBoxObjects(16);
-a[2].value = 3;
-console.log(a);
+var map = makeBoxObjects(16);
 
-
-
-
-
-var map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var mapOld = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 const arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
 const arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
 const arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
@@ -48,9 +34,9 @@ var count = 0;
 function wynik(){//count score
     let suma = 0;
     let bestSuma = localStorage.getItem("highscore");
-    map.forEach(e => {
-            suma += e;
-    })
+    //map.forEach(e => {
+    //        suma += e;
+    //})
     if(suma > bestSuma){
         localStorage.setItem("highscore",suma);
         bestSuma = suma;
@@ -82,7 +68,7 @@ function update(){ //generate,update map
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
     //console.log("Update2: ",rand1, rand2)
-    if(map[rand1] != 0 || map[rand2] != 0){
+    if(map[rand1].value != 0 || map[rand2].value != 0){
         //console.log("Check map")
         let check = checkMap();
         if(check == 0){
@@ -102,8 +88,8 @@ function update(){ //generate,update map
         if(box2 == box1){
             return update();
         }else{
-            map[rand1] = 3;
-            map[rand2] = 3;
+            map[rand1].value = 3;
+            map[rand2].value = 3;
             let scores = wynik();
             //console.log("First update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
@@ -119,17 +105,17 @@ function update(){ //generate,update map
     //console.log("Nth update start")
     let rand = Math.floor(Math.random() * (16 - 0));
         //console.log("Update: ",rand)
-        if(map[rand] == 0){
+        if(map[rand].value == 0){
             //console.log("Nth update, check if empty")
-            map[rand] = 3;
+            map[rand].value = 3;
             console.log(
-                "|" + map[0] + "|" + map[1] + "|" + map[2] + "|" + map[3] + "|\n" +
+                "|" + map[0].value + "|" + map[1].value + "|" + map[2].value + "|" + map[3].value+ "|\n" +
                 " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
-                "|" + map[4] + "|" + map[5] + "|" + map[6] + "|" + map[7] + "|\n" +
+                "|" + map[4].value + "|" + map[5].value + "|" + map[6].value + "|" + map[7].value + "|\n" +
                 " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
-                "|" + map[8] + "|" + map[9] + "|" + map[10] + "|" + map[11] + "|\n" +
+                "|" + map[8].value + "|" + map[9].value + "|" + map[10].value + "|" + map[11].value + "|\n" +
                 " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
-                "|" + map[12] + "|" + map[13] + "|" + map[14] + "|" + map[15] + "|\n" +
+                "|" + map[12].value + "|" + map[13].value + "|" + map[14].value + "|" + map[15].value + "|\n" +
                 " " + "-" + " " + "-" + " " + "-" + " " + "-" 
             )
             let scores = wynik();
@@ -152,33 +138,46 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowDown":
         console.log(event.code)
         arrS.forEach(e => {
-            if(map[e] == map[e+12] && map[e+8] == 0 & map[e+4] == 0){
-                map[e+12] = map[e+12]*3; 
-                map[e]=0;
-            }
-            if(map[e] == map[e+8] & map[e+4] == 0){
-                map[e+8] = map[e+8]*3; 
-                map[e]=0;
-            }
-            if(map[e] == map[e+4]){
-                map[e+4] = map[e+4]*3; 
-                map[e]=0;
-            }
-        });
-        for(let x = 0; x < 3; x++){
-            for(let i = 0; i <= map.length; i++){  
-                if(map[i] > 0){
-    
-                    if(map[i+4] == 0){
-                        map[i+4] = map[i];
-                        map[i] = 0;   
+            if(e <= 11){
+                if(map[e].value == map[e+4].value){
+                    map[e+4].value = map[e+4].value*3;
+                    map[e+4].movable = false; 
+                    map[e].value = 0;
+                }
+                if(e <= 7){
+                    if(map[e].value == map[e+8].value & map[e+4].value == 0 && map[e+8].movable == true){
+                        map[e+8].value = map[e+8].value*3; 
+                        map[e+8].movable = false;
+                        map[e].value = 0;
                     }
-                    if(map[i] != map[i+4]){
-                        console.log("idk");
+                    if(e <=3 ){
+                        if(map[e].value == map[e+12].value && map[e+8].value == 0 & map[e+4].value == 0 && map[e+12].movable == true){
+                            map[e+12].value = map[e+12].value*3; 
+                            map[e+12].movable = false;
+                            map[e].value = 0;
+                        }
                     }
                 }
             }
+        });
+        for(let x = 0; x < 3; x++){
+            for(let i = 0; i <= map.length - 1; i++){  
+                if(map[i].value > 0){
+                    if(i <= 11){
+                        if(map[i+4].value == 0){
+                            map[i+4].value = map[i].value;
+                            map[i].value = 0;   
+                        }
+                        if(map[i] != map[i+4]){
+                            console.log("idk");
+                        }
+                    }  
+                }
+            }
         }
+        map.forEach(x => {
+            x.movable = true;
+        });
         return update();
     case "KeyW":
     case "ArrowUp":
@@ -296,7 +295,7 @@ switch(event.code) {                                      // 1st check if same p
 
 });
 
-window.addEventListener("keydown", function(e) {
+window.addEventListener("keydown", function(e) {  //site doesnt scroll with that
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
         e.preventDefault();
     }
@@ -306,7 +305,7 @@ function checkMap(){ //check if there are empy spaces on map
 
     let i = 0;
     map.forEach(e => {
-        if(e > 0){
+        if(e.value > 0){
             i++;
         }
     });
@@ -321,7 +320,7 @@ function checkMap(){ //check if there are empy spaces on map
 function getValue(){ //get value from map[] and put it into box
     for(let e = 0; e<map.length;e++){
         let box = document.getElementById(e);
-        switch (map[e]) {
+        switch (map[e].value) {
             case 0:
                 box.style.backgroundColor = "#cdc1b4";
                 break;
@@ -371,8 +370,8 @@ function getValue(){ //get value from map[] and put it into box
                 break;
         }
 
-        if(map[e] > 0){ 
-            box.innerText = map[e];
+        if(map[e].value > 0){ 
+            box.innerText = map[e].value;
         }else{
             box.innerText = " ";
         }
