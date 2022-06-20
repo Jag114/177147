@@ -7,12 +7,15 @@
 //change checkMap() 
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
 
+//check variations of 3,3,9,27
+
 class Box {
     constructor(movable, value){
         this.movable = movable;
         this.value = value;
     }
 }
+
 function makeBoxObjects(n) {
     var mapArr = new Array(n)
     for (var i = 0; i < n; ++i) { //i++ crashes, idk why
@@ -20,9 +23,8 @@ function makeBoxObjects(n) {
     }
     return mapArr;
 }
-var map = makeBoxObjects(16);
 
-var mapOld = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var map = makeBoxObjects(16);
 const arrW = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
 const arrS = [15,11,7,3,14,10,6,2,13,9,5,1,12,8,4,0];
 const arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
@@ -183,52 +185,68 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowUp":
         console.log(event.code)
         arrW.forEach(e => {
-            if(map[e] == map[e-12] && map[e-8] == 0 & map[e-4] == 0){
-                map[e-12] = map[e-12]*3; 
-                map[e]=0;
-            }
-            if(map[e] == map[e-8] & map[e-4] == 0){
-                map[e-8] = map[e-8]*3; 
-                map[e]=0;
-            }
-            if(map[e] == map[e-4]){
-                map[e-4] = map[e-4]*3; 
-                map[e]=0;
+            if(e >= 4){
+                if(map[e].value == map[e-4].value){
+                    map[e-4].value = map[e-4].value*3;
+                    map[e-4].movable = false; 
+                    map[e].value = 0;
+                }
+                if(e >= 8){
+                    if(map[e].value == map[e-8].value & map[e-4].value == 0 && map[e-8].movable == true){
+                        map[e-8].value = map[e-8].value*3; 
+                        map[e-8].movable = false;
+                        map[e].value = 0;
+                    }
+                    if(e >= 12){
+                        if(map[e].value == map[e-12].value && map[e-8].value == 0 & map[e-4].value == 0 && map[e-12].movable == true){
+                            map[e-12].value = map[e-12].value*3; 
+                            map[e-12].movable = false;
+                            map[e].value = 0;
+                        }
+                    }
+                }
             }
         });
         for(let x = 0; x < 3; x++){
             for(let i = 15; i >= 0; i--){  
-                if(map[i] > 0){
-    
-                    if(map[i-4] == 0){
-                        map[i-4] = map[i];
-                        map[i] = 0;   
-                    }
-                    if(map[i] != map[i-4]){
-                        console.log("idk");
-                    }
+                if(map[i].value > 0){
+                    if(i >= 4){
+                        if(map[i-4].value == 0){
+                            map[i-4].value = map[i].value;
+                            map[i].value = 0;   
+                        }
+                        if(map[i] != map[i-4]){
+                            console.log("idk");
+                        }
+                    }  
                 }
             }
         }
+        map.forEach(x => {
+            x.movable = true;
+        });
         return update();
     case "KeyA":
     case "ArrowLeft":
         console.log(event.code)
         arrA.forEach(e => {
-            if(e != 4 && e != 8 && e != 12){
-                if(map[e] == map[e-1]){
-                    map[e-1] = map[e-1]*3; 
-                    map[e]=0;
+            if(e != 0 && e != 4 && e != 8 && e != 12){
+                if(map[e].value == map[e-1].value && map[e-1].movable == true){
+                    map[e-1].value = map[e-1].value*3; 
+                    map[e-1].movable = false;
+                    map[e].value = 0;
                 }
-                if(e != 5 && e != 9 && e != 13){
-                    if(map[e] == map[e-2] & map[e-1] == 0){
-                        map[e-2] = map[e-2]*3; 
-                        map[e]=0;
+                if(e != 1 && e != 5 && e != 9 && e != 13){
+                    if(map[e].value == map[e-2].value & map[e-1].value == 0 && map[e-2].movable == true){
+                        map[e-2].value = map[e-2].value*3; 
+                        map[e-2].movable = false;
+                        map[e].value = 0;
                     }
-                    if(e != 6 && e != 10 && e != 14){
-                        if(map[e] == map[e-3] & map[e-2] == 0 & map[e-1] == 0){
-                            map[e-3] = map[e-3]*3; 
-                            map[e]=0;
+                    if(e != 2 && e != 6 && e != 10 && e != 14){
+                        if(map[e].value == map[e-3].value & map[e-2].value == 0 & map[e-1].value == 0 && map[e-3].movable == true){
+                            map[e-3].value = map[e-3].value*3; 
+                            map[e-3].movable = false;
+                            map[e].value = 0;
                         }
                     }
                 }
@@ -237,37 +255,43 @@ switch(event.code) {                                      // 1st check if same p
         for(let x = 0; x < 3; x++){
             for(let i = 15; i >= 0; i--){  
                 if(i != 0 && i != 4 && i != 8 && i != 12){
-                    if(map[i] > 0){
-                        if(map[i-1] == 0){
-                            map[i-1] = map[i];
-                            map[i] = 0;     
+                    if(map[i].value > 0){
+                        if(map[i-1].value == 0){
+                            map[i-1].value = map[i].value;
+                            map[i].value = 0;     
                         }
-                        if(map[i] != map[i-1]){
+                        if(map[i].value != map[i-1].value){
                             console.log("idk");
                         }
                     }  
                 }
             }
         }
+        map.forEach(x => {
+            x.movable = true;
+        });
         return update();
     case "KeyD":
     case "ArrowRight":
         console.log(event.code)
         arrD.forEach(e => {
-            if(e != 3 && e != 7 && e != 11){
-                if(map[e] == map[e+1]){
-                    map[e+1] = map[e+1]*3; 
-                    map[e]=0;
+            if(e != 3 && e != 7 && e != 11 && e != 15){
+                if(map[e].value == map[e+1].value && map[e+1].movable == true){
+                    map[e+1].value = map[e+1].value*3; 
+                    map[e+1].movable = false;
+                    map[e].value = 0;
                 }
-                if(e != 2 && e != 6 && e != 10){
-                    if(map[e] == map[e+2] & map[e+1] == 0){
-                        map[e+2] = map[e+2]*3; 
-                        map[e]=0;
+                if(e != 2 && e != 6 && e != 10 && e != 14){
+                    if(map[e].value == map[e+2].value & map[e+1].value == 0 && map[e+2].movable == true){
+                        map[e+2].value = map[e+2].value*3; 
+                        map[e+2].movable = false;
+                        map[e].value = 0;
                     }
-                    if(e != 1 && e != 5 && e != 9){
-                        if(map[e] == map[e+3] & map[e+2] == 0 & map[e+1] == 0){
-                            map[e+3] = map[e+3]*3; 
-                            map[e]=0;
+                    if(e != 1 && e != 5 && e != 9 && e != 13){
+                        if(map[e].value == map[e+3].value & map[e+2].value == 0 & map[e+1].value == 0 && map[e+3].movable == true){
+                            map[e+3].value = map[e+3].value*3;
+                            map[e+3].movable = false;
+                            map[e].value = 0;
                         }
                     }
                 }
@@ -276,20 +300,23 @@ switch(event.code) {                                      // 1st check if same p
             
         });
         for(let x = 0; x < 3; x++){
-            for(let i = 0; i <= map.length; i++){  
+            for(let i = 0; i <= map.length - 1; i++){  
                 if(i != 3 && i != 7 && i != 11 && i != 15){
-                    if(map[i] > 0){
-                        if(map[i+1] == 0){
-                            map[i+1] = map[i];
-                            map[i] = 0;     
+                    if(map[i].value > 0){
+                        if(map[i+1].value == 0){
+                            map[i+1].value = map[i].value;
+                            map[i].value = 0;     
                         } 
-                        if(map[i] != map[i+1]){
+                        if(map[i].value != map[i+1].value){
                             console.log("idk");
                         }
                     }  
                 }
             }
         }
+        map.forEach(x => {
+            x.movable = true;
+        });
         return update();
     }
 
@@ -387,7 +414,7 @@ function getValue(){ //get value from map[] and put it into box
 */
 
 function reset(){
-    map.fill(0);
+    map = makeBoxObjects(16);
     getValue();
     localStorage.setItem("mapState", []);
     firstUpdate = true;
