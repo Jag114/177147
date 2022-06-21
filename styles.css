@@ -113,6 +113,19 @@ table tr:last-child td:last-child{
     margin-left: 253px;
 }
 
+.button2{
+    background-color: #8f7a66;
+    border-style:solid;
+    border-radius: 3px;
+    border-color: #8f7a66;
+    color: #f9f6f2;
+    width: 145px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .scoreDiv{
     float:left;
     margin-left: 474px;
@@ -198,9 +211,20 @@ table tr:last-child td:last-child{
 
 #overlay{
     position: absolute;
-    display: block;
+    display: none;
     width: 655px;
     height: 655px;
     background-color: rgba(238, 228, 218, 0.73);
     z-index: 0;
+    text-align: center;
+    cursor: default;
+}
+
+#lose{
+    padding-top: 25%;
+    font-size: 60px;
+    font-weight: bold;
+    height: 60px;
+    color: #776e65;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
