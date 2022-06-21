@@ -3,9 +3,11 @@
 //mobile support
 //update for 1 box need to check its near boxes whether they are empty or not
 //css
-//change score counting
-//change checkMap() 
+//change checkMap() and game over mechanic
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
+//rewrite move() so it is cleaner
+//change score, takes value from map[e+n].value and adds it to score
+//add text and reset button to game over overlay
 
 //check variations of 3,3,9,27
 
@@ -36,9 +38,9 @@ var count = 0;
 function wynik(){//count score
     let suma = 0;
     let bestSuma = localStorage.getItem("highscore");
-    //map.forEach(e => {
-    //        suma += e;
-    //})
+    map.forEach(e => {
+            suma += e.value;
+    })
     if(suma > bestSuma){
         localStorage.setItem("highscore",suma);
         bestSuma = suma;
@@ -63,8 +65,9 @@ function checkSave(){
     return 0;
 }
 
-function update(){ //generate,update map
+function update(){ //update map
 
+    
     let scoreCount = document.getElementById("scoreNow");
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
@@ -74,10 +77,7 @@ function update(){ //generate,update map
         //console.log("Check map")
         let check = checkMap();
         if(check == 0){
-            const gameOverDiv = document.createElement("div");
-            const gameOverContent = document.createTextNode("Game Over");
-            gameOverDiv.appendChild(gameOverContent);
-            document.body.replaceChildren(gameOverDiv);
+            document.getElementById("overlay").style.display = "block";
             return;
         }
         return update();
@@ -414,6 +414,7 @@ function getValue(){ //get value from map[] and put it into box
 */
 
 function reset(){
+    document.getElementById("overlay").style.display = "none";
     map = makeBoxObjects(16);
     getValue();
     localStorage.setItem("mapState", []);
@@ -447,17 +448,17 @@ function platforms() {
 function animate(id1,id2 = id1){
     if(arguments.length == 1){
         let box1 = document.getElementById(id1);
-        box1.className = "box_animate";
+        box1.className = "td_animate";
         setTimeout(function(){
-            box1.className = "box";
+            box1.classList.remove("td_animate");
         }, 400)
     }
     let box1 = document.getElementById(id1);
     let box2 = document.getElementById(id2);
-    box1.className = "box_animate";
-    box2.className = "box_animate";
+    box1.className = "td_animate";
+    box2.className = "td_animate";
     setTimeout(function(){
-        box1.className = "box";
-        box2.className = "box";
+        box1.classList.remove("td_animate");
+        box2.classList.remove("td_animate");
     }, 400)
 }
