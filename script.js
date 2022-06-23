@@ -6,8 +6,6 @@
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
 //add animation to currScore box that shows flying +pts
 
-//check variations of 3,3,9,27
-
 class Box {
     constructor(movable, value){
         this.movable = movable;
