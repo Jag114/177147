@@ -4,7 +4,7 @@
 //css
 //change checkMap() and game over mechanic
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
-//add animation to currScore box that shows flying +pts
+//all points gathered in one turn shpuld be counted so they can be used to animate popUpScore
 
 class Box {
     constructor(movable, value){
@@ -466,4 +466,13 @@ function animate(id1,id2 = id1){
         box1.classList.remove("td_animate");
         box2.classList.remove("td_animate");
     }, 400)
+}
+
+function popUpScore(score){
+    let pop = document.getElementById("scorePopUp");
+    pop.innerHTML = score;
+    pop.className == "scorePopUp_animate";
+    setTimeout(function(){
+        pop.className == "scorePopUp";
+    }, 600)
 }

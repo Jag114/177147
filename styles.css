@@ -159,6 +159,43 @@ table tr:last-child td:last-child{
     font-weight: bold;
 }
 
+.scorePopUp{
+    position: absolute;
+    right: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 80px;
+    margin-top: 95px;
+    color: rgb(119, 110, 101, 0.8);
+    z-index: 3;
+    opacity: 0;
+}
+
+.scorePopUp_animate{
+    position: absolute;
+    right: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 80px;
+    margin-top: 95px;
+    color: rgb(119, 110, 101, 0.8);
+    animation: score_animation 600ms ease-in;
+    z-index: 3;
+    opacity: 0;
+}
+
+@keyframes score_animation {
+
+    0% {
+        top: 1px;
+        opacity: 1;
+    }
+
+    100% {
+        top: -80px;
+    }
+}
+
 .scoreBest::before{
     content: "Best";
     float:left;
