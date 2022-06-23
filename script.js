@@ -4,7 +4,7 @@
 //css
 //change checkMap() and game over mechanic
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
-//all points gathered in one turn shpuld be counted so they can be used to animate popUpScore
+//popUpScore for highscore if its updated
 
 class Box {
     constructor(movable, value){
@@ -30,6 +30,7 @@ var mapState = [];
 var firstUpdate = true;
 var count = 0;
 var currScore = 0;
+var turnScore = 0;
 
 function wynik(){//count score
     let bestSuma = localStorage.getItem("highscore");
@@ -136,6 +137,7 @@ switch(event.code) {                                      // 1st check if same p
                 if(map[e].value == map[e+4].value){
                     map[e+4].value = map[e+4].value*3;
                     currScore += map[e+4].value;
+                    turnScore += map[e+4].value;
                     map[e+4].movable = false; 
                     map[e].value = 0;
                 }
@@ -143,6 +145,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[e].value == map[e+8].value & map[e+4].value == 0 && map[e+8].movable == true){
                         map[e+8].value = map[e+8].value*3; 
                         currScore += map[e+8].value;
+                        turnScore += map[e+8].value;
                         map[e+8].movable = false;
                         map[e].value = 0;
                     }
@@ -150,6 +153,7 @@ switch(event.code) {                                      // 1st check if same p
                         if(map[e].value == map[e+12].value && map[e+8].value == 0 & map[e+4].value == 0 && map[e+12].movable == true){
                             map[e+12].value = map[e+12].value*3; 
                             currScore += map[e+12].value;
+                            turnScore += map[e+12].value;
                             map[e+12].movable = false;
                             map[e].value = 0;
                         }
@@ -175,6 +179,8 @@ switch(event.code) {                                      // 1st check if same p
         map.forEach(x => {
             x.movable = true;
         });
+        popUpScore(turnScore);
+        turnScore = 0;
         return update();
     case "KeyW":
     case "ArrowUp":
@@ -184,6 +190,7 @@ switch(event.code) {                                      // 1st check if same p
                 if(map[e].value == map[e-4].value){
                     map[e-4].value = map[e-4].value*3;
                     currScore += map[e-4].value;
+                    turnScore += map[e-4].value;
                     map[e-4].movable = false; 
                     map[e].value = 0;
                 }
@@ -191,6 +198,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[e].value == map[e-8].value & map[e-4].value == 0 && map[e-8].movable == true){
                         map[e-8].value = map[e-8].value*3; 
                         currScore += map[e-8].value;
+                        turnScore += map[e-8].value;
                         map[e-8].movable = false;
                         map[e].value = 0;
                     }
@@ -198,6 +206,7 @@ switch(event.code) {                                      // 1st check if same p
                         if(map[e].value == map[e-12].value && map[e-8].value == 0 & map[e-4].value == 0 && map[e-12].movable == true){
                             map[e-12].value = map[e-12].value*3; 
                             currScore += map[e-12].value;
+                            turnScore += map[e-12].value;
                             map[e-12].movable = false;
                             map[e].value = 0;
                         }
@@ -223,6 +232,8 @@ switch(event.code) {                                      // 1st check if same p
         map.forEach(x => {
             x.movable = true;
         });
+        popUpScore(turnScore);
+        turnScore = 0;
         return update();
     case "KeyA":
     case "ArrowLeft":
@@ -232,6 +243,7 @@ switch(event.code) {                                      // 1st check if same p
                 if(map[e].value == map[e-1].value && map[e-1].movable == true){
                     map[e-1].value = map[e-1].value*3; 
                     currScore += map[e-1].value;
+                    turnScore += map[e-1].value;
                     map[e-1].movable = false;
                     map[e].value = 0;
                 }
@@ -239,6 +251,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[e].value == map[e-2].value & map[e-1].value == 0 && map[e-2].movable == true){
                         map[e-2].value = map[e-2].value*3; 
                         currScore += map[e-2].value;
+                        turnScore += map[e-2].value;
                         map[e-2].movable = false;
                         map[e].value = 0;
                     }
@@ -246,6 +259,7 @@ switch(event.code) {                                      // 1st check if same p
                         if(map[e].value == map[e-3].value & map[e-2].value == 0 & map[e-1].value == 0 && map[e-3].movable == true){
                             map[e-3].value = map[e-3].value*3; 
                             currScore += map[e-3].value;
+                            turnScore += map[e-3].value;
                             map[e-3].movable = false;
                             map[e].value = 0;
                         }
@@ -271,6 +285,8 @@ switch(event.code) {                                      // 1st check if same p
         map.forEach(x => {
             x.movable = true;
         });
+        popUpScore(turnScore);
+        turnScore = 0;
         return update();
     case "KeyD":
     case "ArrowRight":
@@ -280,6 +296,7 @@ switch(event.code) {                                      // 1st check if same p
                 if(map[e].value == map[e+1].value && map[e+1].movable == true){
                     map[e+1].value = map[e+1].value*3; 
                     currScore += map[e+1].value;
+                    turnScore += map[e+1].value;
                     map[e+1].movable = false;
                     map[e].value = 0;
                 }
@@ -287,6 +304,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[e].value == map[e+2].value & map[e+1].value == 0 && map[e+2].movable == true){
                         map[e+2].value = map[e+2].value*3; 
                         currScore += map[e+2].value;
+                        turnScore += map[e+2].value;
                         map[e+2].movable = false;
                         map[e].value = 0;
                     }
@@ -294,14 +312,13 @@ switch(event.code) {                                      // 1st check if same p
                         if(map[e].value == map[e+3].value & map[e+2].value == 0 & map[e+1].value == 0 && map[e+3].movable == true){
                             map[e+3].value = map[e+3].value*3;
                             currScore += map[e+3].value;
+                            turnScore += map[e+3].value;
                             map[e+3].movable = false;
                             map[e].value = 0;
                         }
                     }
                 }
-            }
-            
-            
+            } 
         });
         for(let x = 0; x < 3; x++){
             for(let i = 0; i <= map.length - 1; i++){  
@@ -321,9 +338,10 @@ switch(event.code) {                                      // 1st check if same p
         map.forEach(x => {
             x.movable = true;
         });
+        popUpScore(turnScore);
+        turnScore = 0;
         return update();
     }
-
 });
 
 window.addEventListener("keydown", function(e) {  //site doesnt scroll with that
@@ -469,10 +487,12 @@ function animate(id1,id2 = id1){
 }
 
 function popUpScore(score){
-    let pop = document.getElementById("scorePopUp");
-    pop.innerHTML = score;
-    pop.className == "scorePopUp_animate";
-    setTimeout(function(){
-        pop.className == "scorePopUp";
-    }, 600)
+    if(score > 0){
+        let pop = document.getElementById("scorePopUp");
+        pop.innerHTML = `+${score}`;
+        pop.className = "scorePopUp_animate";
+        setTimeout(function(){
+            pop.className = "scorePopUp";
+        }, 600)
+    }
 }
