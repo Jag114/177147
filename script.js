@@ -1,13 +1,10 @@
 //TODO
 //add animations: 2.for moving
 //mobile support
-//update for 1 box need to check its near boxes whether they are empty or not
 //css
 //change checkMap() and game over mechanic
 //add do nothing if there is nothing to do, i.e. dont spawn new boxes
-//rewrite move() so it is cleaner
-//change score, takes value from map[e+n].value and adds it to score
-//add text and reset button to game over overlay
+//add animation to currScore box that shows flying +pts
 
 //check variations of 3,3,9,27
 
@@ -34,19 +31,16 @@ const arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
 var mapState = [];
 var firstUpdate = true;
 var count = 0;
+var currScore = 0;
 
 function wynik(){//count score
-    let suma = 0;
     let bestSuma = localStorage.getItem("highscore");
-    map.forEach(e => {
-            suma += e.value;
-    })
-    if(suma > bestSuma){
-        localStorage.setItem("highscore",suma);
-        bestSuma = suma;
+    if(currScore > bestSuma){
+        localStorage.setItem("highscore",currScore);
+        bestSuma = currScore;
     }
     return {
-        'score':suma,
+        'score':currScore,
         'highscore':bestSuma
     };
 }
@@ -143,18 +137,21 @@ switch(event.code) {                                      // 1st check if same p
             if(e <= 11){
                 if(map[e].value == map[e+4].value){
                     map[e+4].value = map[e+4].value*3;
+                    currScore += map[e+4].value;
                     map[e+4].movable = false; 
                     map[e].value = 0;
                 }
                 if(e <= 7){
                     if(map[e].value == map[e+8].value & map[e+4].value == 0 && map[e+8].movable == true){
                         map[e+8].value = map[e+8].value*3; 
+                        currScore += map[e+8].value;
                         map[e+8].movable = false;
                         map[e].value = 0;
                     }
                     if(e <=3 ){
                         if(map[e].value == map[e+12].value && map[e+8].value == 0 & map[e+4].value == 0 && map[e+12].movable == true){
                             map[e+12].value = map[e+12].value*3; 
+                            currScore += map[e+12].value;
                             map[e+12].movable = false;
                             map[e].value = 0;
                         }
@@ -188,18 +185,21 @@ switch(event.code) {                                      // 1st check if same p
             if(e >= 4){
                 if(map[e].value == map[e-4].value){
                     map[e-4].value = map[e-4].value*3;
+                    currScore += map[e-4].value;
                     map[e-4].movable = false; 
                     map[e].value = 0;
                 }
                 if(e >= 8){
                     if(map[e].value == map[e-8].value & map[e-4].value == 0 && map[e-8].movable == true){
                         map[e-8].value = map[e-8].value*3; 
+                        currScore += map[e-8].value;
                         map[e-8].movable = false;
                         map[e].value = 0;
                     }
                     if(e >= 12){
                         if(map[e].value == map[e-12].value && map[e-8].value == 0 & map[e-4].value == 0 && map[e-12].movable == true){
                             map[e-12].value = map[e-12].value*3; 
+                            currScore += map[e-12].value;
                             map[e-12].movable = false;
                             map[e].value = 0;
                         }
@@ -233,18 +233,21 @@ switch(event.code) {                                      // 1st check if same p
             if(e != 0 && e != 4 && e != 8 && e != 12){
                 if(map[e].value == map[e-1].value && map[e-1].movable == true){
                     map[e-1].value = map[e-1].value*3; 
+                    currScore += map[e-1].value;
                     map[e-1].movable = false;
                     map[e].value = 0;
                 }
                 if(e != 1 && e != 5 && e != 9 && e != 13){
                     if(map[e].value == map[e-2].value & map[e-1].value == 0 && map[e-2].movable == true){
                         map[e-2].value = map[e-2].value*3; 
+                        currScore += map[e-2].value;
                         map[e-2].movable = false;
                         map[e].value = 0;
                     }
                     if(e != 2 && e != 6 && e != 10 && e != 14){
                         if(map[e].value == map[e-3].value & map[e-2].value == 0 & map[e-1].value == 0 && map[e-3].movable == true){
                             map[e-3].value = map[e-3].value*3; 
+                            currScore += map[e-3].value;
                             map[e-3].movable = false;
                             map[e].value = 0;
                         }
@@ -278,18 +281,21 @@ switch(event.code) {                                      // 1st check if same p
             if(e != 3 && e != 7 && e != 11 && e != 15){
                 if(map[e].value == map[e+1].value && map[e+1].movable == true){
                     map[e+1].value = map[e+1].value*3; 
+                    currScore += map[e+1].value;
                     map[e+1].movable = false;
                     map[e].value = 0;
                 }
                 if(e != 2 && e != 6 && e != 10 && e != 14){
                     if(map[e].value == map[e+2].value & map[e+1].value == 0 && map[e+2].movable == true){
                         map[e+2].value = map[e+2].value*3; 
+                        currScore += map[e+2].value;
                         map[e+2].movable = false;
                         map[e].value = 0;
                     }
                     if(e != 1 && e != 5 && e != 9 && e != 13){
                         if(map[e].value == map[e+3].value & map[e+2].value == 0 & map[e+1].value == 0 && map[e+3].movable == true){
                             map[e+3].value = map[e+3].value*3;
+                            currScore += map[e+3].value;
                             map[e+3].movable = false;
                             map[e].value = 0;
                         }
@@ -419,6 +425,7 @@ function reset(){
     getValue();
     localStorage.setItem("mapState", []);
     firstUpdate = true;
+    currScore = 0;
     return update();
 }
 
