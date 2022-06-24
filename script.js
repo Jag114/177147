@@ -515,7 +515,7 @@ function popUpScore(score){
 function moveBox(id, direction, multiplier){
     let box = document.getElementById(id);
     const a_time = {
-        duration: 10000, //default 100
+        duration: 100, //default 100
     }
 
     if(map[id].value > 0){
