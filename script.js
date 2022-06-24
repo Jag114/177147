@@ -496,3 +496,26 @@ function popUpScore(score){
         }, 600)
     }
 }
+
+function moveBox(id, direction){
+    let box = document.getElementById(id);
+    switch (direction) {
+        case up:
+            box.className = "box_animate_up";
+            break;
+        case down:
+            box.className = "box_animate_down";
+            break;
+        case left:
+            box.className = "box_animate_left";
+            break;
+        case rigth:
+            box.className = "box_animate_right";
+            break;
+        default:
+            break;
+    }
+    setTimeout(function(){
+        box.className = "box";
+    }, 100)
+}

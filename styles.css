@@ -30,7 +30,6 @@ table{
     overflow: hidden;
     table-layout: fixed;
     width: 460px;
-    
 }
 
 tr{
@@ -264,4 +263,56 @@ table tr:last-child td:last-child{
     height: 60px;
     color: #776e65;
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.box_animate_down{
+    animation: move_box_down .1s ease-in;
+}
+
+@keyframes move_box_down {
+    0% {
+        transform: translate(0px);
+    }
+    100% {
+        transform: translate(0px, 160px);
+    }
+}
+
+.box_animate_up{
+    animation: move_box_up .1s ease-in;
+}
+
+@keyframes move_box_up {
+    0% {
+        transform: translate(0px);
+    }
+    100% {
+        transform: translate(0px, -160px);
+    }
+}
+
+.box_animate_left{
+    animation: move_box_left .1s ease-in;
+}
+
+@keyframes move_box_left {
+    0% {
+        transform: translate(0px);
+    }
+    100% {
+        transform: translate(-160px, 0px);
+    }
+}
+
+.box_animate_right{
+    animation: move_box_right .1s ease-in;
+}
+
+@keyframes move_box_right {
+    0% {
+        transform: translate(0px);
+    }
+    100% {
+        transform: translate(160px, 0px);
+    }
 }
