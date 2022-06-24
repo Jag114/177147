@@ -1,5 +1,5 @@
 //TODO
-//add animations: 2.for moving
+//add animations: 2.for moving: put new box into the place from which animated box moved
 //mobile support
 //css
 //change checkMap() and game over mechanic
@@ -134,10 +134,11 @@ switch(event.code) {                                      // 1st check if same p
         console.log(event.code)
         arrS.forEach(e => {
             if(e <= 11){
-                if(map[e].value == map[e+4].value){
+                if(map[e].value == map[e+4].value && map[e+4].movable == true){
                     map[e+4].value = map[e+4].value*3;
                     currScore += map[e+4].value;
                     turnScore += map[e+4].value;
+                    moveBox(e, "down", 1);
                     map[e+4].movable = false; 
                     map[e].value = 0;
                 }
@@ -146,6 +147,7 @@ switch(event.code) {                                      // 1st check if same p
                         map[e+8].value = map[e+8].value*3; 
                         currScore += map[e+8].value;
                         turnScore += map[e+8].value;
+                        moveBox(e, "down", 2);
                         map[e+8].movable = false;
                         map[e].value = 0;
                     }
@@ -154,6 +156,7 @@ switch(event.code) {                                      // 1st check if same p
                             map[e+12].value = map[e+12].value*3; 
                             currScore += map[e+12].value;
                             turnScore += map[e+12].value;
+                            moveBox(e, "down", 3);
                             map[e+12].movable = false;
                             map[e].value = 0;
                         }
@@ -167,6 +170,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(i <= 11){
                         if(map[i+4].value == 0){
                             map[i+4].value = map[i].value;
+                            moveBox(i, "down", 1);
                             map[i].value = 0;   
                         }
                         if(map[i] != map[i+4]){
@@ -187,10 +191,11 @@ switch(event.code) {                                      // 1st check if same p
         console.log(event.code)
         arrW.forEach(e => {
             if(e >= 4){
-                if(map[e].value == map[e-4].value){
+                if(map[e].value == map[e-4].value &&  map[e-4].movable == true){
                     map[e-4].value = map[e-4].value*3;
                     currScore += map[e-4].value;
                     turnScore += map[e-4].value;
+                    moveBox(e, "up", 1);
                     map[e-4].movable = false; 
                     map[e].value = 0;
                 }
@@ -199,6 +204,7 @@ switch(event.code) {                                      // 1st check if same p
                         map[e-8].value = map[e-8].value*3; 
                         currScore += map[e-8].value;
                         turnScore += map[e-8].value;
+                        moveBox(e, "up", 2);
                         map[e-8].movable = false;
                         map[e].value = 0;
                     }
@@ -207,6 +213,7 @@ switch(event.code) {                                      // 1st check if same p
                             map[e-12].value = map[e-12].value*3; 
                             currScore += map[e-12].value;
                             turnScore += map[e-12].value;
+                            moveBox(e, "up", 3);
                             map[e-12].movable = false;
                             map[e].value = 0;
                         }
@@ -220,6 +227,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(i >= 4){
                         if(map[i-4].value == 0){
                             map[i-4].value = map[i].value;
+                            moveBox(i, "up", 1);
                             map[i].value = 0;   
                         }
                         if(map[i] != map[i-4]){
@@ -244,6 +252,7 @@ switch(event.code) {                                      // 1st check if same p
                     map[e-1].value = map[e-1].value*3; 
                     currScore += map[e-1].value;
                     turnScore += map[e-1].value;
+                    moveBox(e, "left", 1);
                     map[e-1].movable = false;
                     map[e].value = 0;
                 }
@@ -252,6 +261,7 @@ switch(event.code) {                                      // 1st check if same p
                         map[e-2].value = map[e-2].value*3; 
                         currScore += map[e-2].value;
                         turnScore += map[e-2].value;
+                        moveBox(e, "left", 2);
                         map[e-2].movable = false;
                         map[e].value = 0;
                     }
@@ -260,6 +270,7 @@ switch(event.code) {                                      // 1st check if same p
                             map[e-3].value = map[e-3].value*3; 
                             currScore += map[e-3].value;
                             turnScore += map[e-3].value;
+                            moveBox(e, "left", 3);
                             map[e-3].movable = false;
                             map[e].value = 0;
                         }
@@ -273,6 +284,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[i].value > 0){
                         if(map[i-1].value == 0){
                             map[i-1].value = map[i].value;
+                            moveBox(i, "left", 1);
                             map[i].value = 0;     
                         }
                         if(map[i].value != map[i-1].value){
@@ -297,6 +309,7 @@ switch(event.code) {                                      // 1st check if same p
                     map[e+1].value = map[e+1].value*3; 
                     currScore += map[e+1].value;
                     turnScore += map[e+1].value;
+                    moveBox(e, "right", 1);
                     map[e+1].movable = false;
                     map[e].value = 0;
                 }
@@ -305,6 +318,7 @@ switch(event.code) {                                      // 1st check if same p
                         map[e+2].value = map[e+2].value*3; 
                         currScore += map[e+2].value;
                         turnScore += map[e+2].value;
+                        moveBox(e, "right", 2);
                         map[e+2].movable = false;
                         map[e].value = 0;
                     }
@@ -313,6 +327,7 @@ switch(event.code) {                                      // 1st check if same p
                             map[e+3].value = map[e+3].value*3;
                             currScore += map[e+3].value;
                             turnScore += map[e+3].value;
+                            moveBox(e, "right", 3);
                             map[e+3].movable = false;
                             map[e].value = 0;
                         }
@@ -326,6 +341,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[i].value > 0){
                         if(map[i+1].value == 0){
                             map[i+1].value = map[i].value;
+                            moveBox(i, "right", 1);
                             map[i].value = 0;     
                         } 
                         if(map[i].value != map[i+1].value){
@@ -351,7 +367,6 @@ window.addEventListener("keydown", function(e) {  //site doesnt scroll with that
 });
 
 function checkMap(){ //check if there are empy spaces on map
-
     let i = 0;
     map.forEach(e => {
         if(e.value > 0){
@@ -497,25 +512,52 @@ function popUpScore(score){
     }
 }
 
-function moveBox(id, direction){
+function moveBox(id, direction, multiplier){
     let box = document.getElementById(id);
-    switch (direction) {
-        case up:
-            box.className = "box_animate_up";
-            break;
-        case down:
-            box.className = "box_animate_down";
-            break;
-        case left:
-            box.className = "box_animate_left";
-            break;
-        case rigth:
-            box.className = "box_animate_right";
-            break;
-        default:
-            break;
+    const a_time = {
+        duration: 10000, //default 100
     }
-    setTimeout(function(){
-        box.className = "box";
-    }, 100)
+
+    if(map[id].value > 0){
+        switch (direction) {
+            case "up":
+            if(id > 3){
+                t = (-160) * multiplier;
+                var a = [
+                    {transform: `translate(0px,${t}px)`}
+                ]
+            }    
+            box.animate(a, a_time); 
+                break;
+            case "down":
+            if(id < 12){
+                t = 160 * multiplier;
+                var a = [
+                    {transform: `translate(0px,${t}px)`}
+                ]
+            }
+            box.animate(a, a_time);
+                break;
+            case "left":
+            if(id != 0 && id != 4 && id != 8 && id != 12){
+                t = (-160) * multiplier;
+                var a = [
+                    {transform: `translate(${t}px)`}
+                ]
+            }    
+            box.animate(a, a_time);     
+                break;
+            case "right":
+                if(id != 3 && id != 7 && id != 11 && id != 15){
+                    t = 160 * multiplier;
+                    var a = [
+                        {transform: `translate(${t}px)`}
+                    ]
+                }    
+                box.animate(a, a_time);       
+                break;
+            default:
+                break;
+        }
+    }
 }
