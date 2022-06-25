@@ -138,7 +138,7 @@ switch(event.code) {                                      // 1st check if same p
                     map[e+4].value = map[e+4].value*3;
                     currScore += map[e+4].value;
                     turnScore += map[e+4].value;
-                    moveBox(e, "down", 1);
+                    moveBox(e, "down", 0); //default 1
                     map[e+4].movable = false; 
                     map[e].value = 0;
                 }
@@ -147,7 +147,7 @@ switch(event.code) {                                      // 1st check if same p
                         map[e+8].value = map[e+8].value*3; 
                         currScore += map[e+8].value;
                         turnScore += map[e+8].value;
-                        moveBox(e, "down", 2);
+                        moveBox(e, "down", 1); //default 1
                         map[e+8].movable = false;
                         map[e].value = 0;
                     }
@@ -156,7 +156,7 @@ switch(event.code) {                                      // 1st check if same p
                             map[e+12].value = map[e+12].value*3; 
                             currScore += map[e+12].value;
                             turnScore += map[e+12].value;
-                            moveBox(e, "down", 3);
+                            moveBox(e, "down", 2); //default 1
                             map[e+12].movable = false;
                             map[e].value = 0;
                         }
@@ -560,4 +560,8 @@ function moveBox(id, direction, multiplier){
                 break;
         }
     }
+}
+
+const moveCheck = () => {
+    //check if player can move tiles, if not, dont update
 }
