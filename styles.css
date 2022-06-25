@@ -265,54 +265,10 @@ table tr:last-child td:last-child{
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
-.box_animate_down{
-    animation: move_box_down .1s ease-in;
-}
-
-@keyframes move_box_down {
-    0% {
-        transform: translate(0px);
-    }
-    100% {
-        transform: translate(0px, 160px);
-    }
-}
-
-.box_animate_up{
-    animation: move_box_up .1s ease-in;
-}
-
-@keyframes move_box_up {
-    0% {
-        transform: translate(0px);
-    }
-    100% {
-        transform: translate(0px, -160px);
-    }
-}
-
-.box_animate_left{
-    animation: move_box_left .1s ease-in;
-}
-
-@keyframes move_box_left {
-    0% {
-        transform: translate(0px);
-    }
-    100% {
-        transform: translate(-160px, 0px);
-    }
-}
-
-.box_animate_right{
-    animation: move_box_right .1s ease-in;
-}
-
-@keyframes move_box_right {
-    0% {
-        transform: translate(0px);
-    }
-    100% {
-        transform: translate(160px, 0px);
-    }
+#table_background{
+    margin: 10px;
+    border-radius: 15px;
+    width: 640px;
+    height: 640px;
+    background-color: #cdc1b4
 }
