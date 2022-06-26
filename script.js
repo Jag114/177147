@@ -562,6 +562,14 @@ function moveBox(id, direction, multiplier){
     }
 }
 
-const moveCheck = () => {
-    //check if player can move tiles, if not, dont update
+function moveCheck(){
+    map.forEach(e => {
+        if(e.value > 0){ //down
+            if(indexOf(e) < 12){
+                
+                    
+                
+            }
+        }
+    })
 }
