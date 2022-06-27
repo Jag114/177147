@@ -207,6 +207,7 @@ switch(event.code) {                                      // 1st check if same p
                     moveBox(e, "up", 1);
                     map[e-4].movable = false; 
                     map[e].value = 0;
+                    canMove = true;
                 }
                 if(e >= 8){
                     if(map[e].value == map[e-8].value & map[e-4].value == 0 && map[e-8].movable == true){
@@ -216,6 +217,7 @@ switch(event.code) {                                      // 1st check if same p
                         moveBox(e, "up", 2);
                         map[e-8].movable = false;
                         map[e].value = 0;
+                        canMove = true;
                     }
                     if(e >= 12){
                         if(map[e].value == map[e-12].value && map[e-8].value == 0 & map[e-4].value == 0 && map[e-12].movable == true){
@@ -225,6 +227,7 @@ switch(event.code) {                                      // 1st check if same p
                             moveBox(e, "up", 3);
                             map[e-12].movable = false;
                             map[e].value = 0;
+                            canMove = true;
                         }
                     }
                 }
@@ -234,14 +237,16 @@ switch(event.code) {                                      // 1st check if same p
             for(let i = 15; i >= 0; i--){  
                 if(map[i].value > 0){
                     if(i >= 4){
+                        if(map[i] != map[i-4]){
+                            console.log("idk");
+                            canMove = false;
+                        }
                         if(map[i-4].value == 0){
                             map[i-4].value = map[i].value;
                             moveBox(i, "up", 1);
                             map[i].value = 0;   
-                        }
-                        if(map[i] != map[i-4]){
-                            console.log("idk");
-                        }
+                            canMove = true;
+                        } 
                     }  
                 }
             }
@@ -264,6 +269,7 @@ switch(event.code) {                                      // 1st check if same p
                     moveBox(e, "left", 1);
                     map[e-1].movable = false;
                     map[e].value = 0;
+                    canMove = true;
                 }
                 if(e != 1 && e != 5 && e != 9 && e != 13){
                     if(map[e].value == map[e-2].value & map[e-1].value == 0 && map[e-2].movable == true){
@@ -273,6 +279,7 @@ switch(event.code) {                                      // 1st check if same p
                         moveBox(e, "left", 2);
                         map[e-2].movable = false;
                         map[e].value = 0;
+                        canMove = true;
                     }
                     if(e != 2 && e != 6 && e != 10 && e != 14){
                         if(map[e].value == map[e-3].value & map[e-2].value == 0 & map[e-1].value == 0 && map[e-3].movable == true){
@@ -282,6 +289,7 @@ switch(event.code) {                                      // 1st check if same p
                             moveBox(e, "left", 3);
                             map[e-3].movable = false;
                             map[e].value = 0;
+                            canMove = true;
                         }
                     }
                 }
@@ -291,14 +299,16 @@ switch(event.code) {                                      // 1st check if same p
             for(let i = 15; i >= 0; i--){  
                 if(i != 0 && i != 4 && i != 8 && i != 12){
                     if(map[i].value > 0){
+                        if(map[i].value != map[i-1].value){
+                            console.log("idk");
+                            canMove = false;
+                        }
                         if(map[i-1].value == 0){
                             map[i-1].value = map[i].value;
                             moveBox(i, "left", 1);
                             map[i].value = 0;     
-                        }
-                        if(map[i].value != map[i-1].value){
-                            console.log("idk");
-                        }
+                            canMove = true;
+                        }  
                     }  
                 }
             }
@@ -321,6 +331,7 @@ switch(event.code) {                                      // 1st check if same p
                     moveBox(e, "right", 1);
                     map[e+1].movable = false;
                     map[e].value = 0;
+                    canMove = true;
                 }
                 if(e != 2 && e != 6 && e != 10 && e != 14){
                     if(map[e].value == map[e+2].value & map[e+1].value == 0 && map[e+2].movable == true){
@@ -330,6 +341,7 @@ switch(event.code) {                                      // 1st check if same p
                         moveBox(e, "right", 2);
                         map[e+2].movable = false;
                         map[e].value = 0;
+                        canMove = true;
                     }
                     if(e != 1 && e != 5 && e != 9 && e != 13){
                         if(map[e].value == map[e+3].value & map[e+2].value == 0 & map[e+1].value == 0 && map[e+3].movable == true){
@@ -339,6 +351,7 @@ switch(event.code) {                                      // 1st check if same p
                             moveBox(e, "right", 3);
                             map[e+3].movable = false;
                             map[e].value = 0;
+                            canMove = true;
                         }
                     }
                 }
@@ -348,13 +361,15 @@ switch(event.code) {                                      // 1st check if same p
             for(let i = 0; i <= map.length - 1; i++){  
                 if(i != 3 && i != 7 && i != 11 && i != 15){
                     if(map[i].value > 0){
+                        if(map[i].value != map[i+1].value){
+                            console.log("idk");
+                            canMove = false;
+                        }
                         if(map[i+1].value == 0){
                             map[i+1].value = map[i].value;
                             moveBox(i, "right", 1);
-                            map[i].value = 0;     
-                        } 
-                        if(map[i].value != map[i+1].value){
-                            console.log("idk");
+                            map[i].value = 0;    
+                            canMove = true; 
                         }
                     }  
                 }
