@@ -31,6 +31,7 @@ var firstUpdate = true;
 var count = 0;
 var currScore = 0;
 var turnScore = 0;
+var canMove = false;
 
 function wynik(){//count score
     let bestSuma = localStorage.getItem("highscore");
@@ -59,8 +60,6 @@ function checkSave(){
 }
 
 function update(){ //update map
-
-    
     let scoreCount = document.getElementById("scoreNow");
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
@@ -96,6 +95,11 @@ function update(){ //update map
             firstUpdate = false;
             return getValue(), checkMap();
         }
+    }
+    console.log(canMove);
+    if(canMove == false) {
+        getValue();
+        return 0;
     }
     //console.log("Nth update start")
     let rand = Math.floor(Math.random() * (16 - 0));
@@ -141,6 +145,7 @@ switch(event.code) {                                      // 1st check if same p
                     moveBox(e, "down", 0); //default 1
                     map[e+4].movable = false; 
                     map[e].value = 0;
+                    canMove = true;
                 }
                 if(e <= 7){
                     if(map[e].value == map[e+8].value & map[e+4].value == 0 && map[e+8].movable == true){
@@ -150,6 +155,7 @@ switch(event.code) {                                      // 1st check if same p
                         moveBox(e, "down", 1); //default 1
                         map[e+8].movable = false;
                         map[e].value = 0;
+                        canMove = true;
                     }
                     if(e <=3 ){
                         if(map[e].value == map[e+12].value && map[e+8].value == 0 & map[e+4].value == 0 && map[e+12].movable == true){
@@ -159,6 +165,7 @@ switch(event.code) {                                      // 1st check if same p
                             moveBox(e, "down", 2); //default 1
                             map[e+12].movable = false;
                             map[e].value = 0;
+                            canMove = true;
                         }
                     }
                 }
@@ -168,13 +175,15 @@ switch(event.code) {                                      // 1st check if same p
             for(let i = 0; i <= map.length - 1; i++){  
                 if(map[i].value > 0){
                     if(i <= 11){
+                        if(map[i].value != map[i+4].value){
+                            console.log("idk");
+                            canMove = false;
+                        }
                         if(map[i+4].value == 0){
                             map[i+4].value = map[i].value;
                             moveBox(i, "down", 1);
                             map[i].value = 0;   
-                        }
-                        if(map[i] != map[i+4]){
-                            console.log("idk");
+                            canMove = true;
                         }
                     }  
                 }
@@ -457,6 +466,7 @@ function reset(){
     localStorage.setItem("mapState", []);
     firstUpdate = true;
     currScore = 0;
+    canMove = true;
     return update();
 }
 
@@ -567,7 +577,7 @@ function moveCheck(){
         if(e.value > 0){ //down
             if(indexOf(e) < 12){
                 
-                    
+                    //bool w move()
                 
             }
         }
