@@ -1,9 +1,8 @@
-//TODO
-//add animations: 2.for moving: put new box into the place from which animated box moved
+//TODO (higher == more prio)
+//change checkMap() and game over mechanic, if there are 16 tiles, simulate moves
 //mobile support
+//fix animation: for moving: put new box into the place from which animated box moved
 //css
-//change checkMap() and game over mechanic
-//add do nothing if there is nothing to do, i.e. dont spawn new boxes
 //popUpScore for highscore if its updated
 
 class Box {
@@ -28,13 +27,16 @@ const arrA = [12,13,14,15,8,9,10,11,4,5,6,7,0,1,2,3]; // L > P
 const arrD = [3,2,1,0,7,6,5,4,11,10,9,8,15,14,13,12]; // P > L
 var mapState = [];
 var firstUpdate = true;
-var count = 0;
 var currScore = 0;
 var turnScore = 0;
 var canMove = false;
 
 function wynik(){//count score
-    let bestSuma = localStorage.getItem("highscore");
+    if(localStorage.getItem("highscore"))
+    {
+        var bestSuma = localStorage.getItem("highscore");
+    }else {bestSuma = 0}
+    
     if(currScore > bestSuma){
         localStorage.setItem("highscore",currScore);
         bestSuma = currScore;
@@ -64,9 +66,7 @@ function update(){ //update map
     let scoreHigh = document.getElementById("scoreBest");
     let rand1 = Math.floor(Math.random() * (16 - 0));
     let rand2 = Math.floor(Math.random() * (16 - 0));
-    //console.log("Update2: ",rand1, rand2)
     if(map[rand1].value != 0 || map[rand2].value != 0){
-        //console.log("Check map")
         let check = checkMap();
         if(check == 0){
             document.getElementById("overlay").style.display = "block";
@@ -76,7 +76,6 @@ function update(){ //update map
     }
     
     if(firstUpdate == true){ 
-        //console.log("First update, start")
         let box1 = document.getElementById(rand1);
         let box2 = document.getElementById(rand2);
         if(box2 == box1){
@@ -85,7 +84,6 @@ function update(){ //update map
             map[rand1].value = 3;
             map[rand2].value = 3;
             let scores = wynik();
-            //console.log("First update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             animate(rand1,rand2)
@@ -96,35 +94,24 @@ function update(){ //update map
             return getValue(), checkMap();
         }
     }
-    console.log(canMove);
+    console.log("Update: ",canMove);
     if(canMove == false) {
         getValue();
+        //save to mapState? maybe other shenanigans
         return 0;
     }
-    //console.log("Nth update start")
     let rand = Math.floor(Math.random() * (16 - 0));
-        //console.log("Update: ",rand)
         if(map[rand].value == 0){
-            //console.log("Nth update, check if empty")
             map[rand].value = 3;
-            console.log(
-                "|" + map[0].value + "|" + map[1].value + "|" + map[2].value + "|" + map[3].value+ "|\n" +
-                " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
-                "|" + map[4].value + "|" + map[5].value + "|" + map[6].value + "|" + map[7].value + "|\n" +
-                " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
-                "|" + map[8].value + "|" + map[9].value + "|" + map[10].value + "|" + map[11].value + "|\n" +
-                " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
-                "|" + map[12].value + "|" + map[13].value + "|" + map[14].value + "|" + map[15].value + "|\n" +
-                " " + "-" + " " + "-" + " " + "-" + " " + "-" 
-            )
             let scores = wynik();
-            //console.log("Nth update, score", scores.score, scores.highscore)
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             animate(rand);
             mapState = [];
             mapState = [...map];
             localStorage.setItem("mapState",JSON.stringify(mapState));
+            canMove = false; 
+            console.log("UpdateEnd: ", canMove)
             return getValue(), checkMap();
         }else {return update()}
 
@@ -137,35 +124,40 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowDown":
         console.log(event.code)
         arrS.forEach(e => {
-            if(e <= 11){
-                if(map[e].value == map[e+4].value && map[e+4].movable == true){
-                    map[e+4].value = map[e+4].value*3;
-                    currScore += map[e+4].value;
-                    turnScore += map[e+4].value;
-                    moveBox(e, "down", 0); //default 1
-                    map[e+4].movable = false; 
-                    map[e].value = 0;
-                    canMove = true;
-                }
-                if(e <= 7){
-                    if(map[e].value == map[e+8].value & map[e+4].value == 0 && map[e+8].movable == true){
-                        map[e+8].value = map[e+8].value*3; 
-                        currScore += map[e+8].value;
-                        turnScore += map[e+8].value;
-                        moveBox(e, "down", 1); //default 1
-                        map[e+8].movable = false;
+            if(map[e].value > 0){
+                if(e <= 11){
+                    if(map[e].value == map[e+4].value && map[e+4].movable == true){
+                        map[e+4].value = map[e+4].value*3;
+                        currScore += map[e+4].value;
+                        turnScore += map[e+4].value;
+                        moveBox(e, "down", 0); //default 1
+                        map[e+4].movable = false; 
                         map[e].value = 0;
                         canMove = true;
+                        console.log("moveDownOne", canMove);
                     }
-                    if(e <=3 ){
-                        if(map[e].value == map[e+12].value && map[e+8].value == 0 & map[e+4].value == 0 && map[e+12].movable == true){
-                            map[e+12].value = map[e+12].value*3; 
-                            currScore += map[e+12].value;
-                            turnScore += map[e+12].value;
-                            moveBox(e, "down", 2); //default 1
-                            map[e+12].movable = false;
+                    if(e <= 7){
+                        if(map[e].value == map[e+8].value & map[e+4].value == 0 && map[e+8].movable == true){
+                            map[e+8].value = map[e+8].value*3; 
+                            currScore += map[e+8].value;
+                            turnScore += map[e+8].value;
+                            moveBox(e, "down", 1); //default 2
+                            map[e+8].movable = false;
                             map[e].value = 0;
                             canMove = true;
+                            console.log("moveDownTwo", canMove);
+                        }
+                        if(e <=3 ){
+                            if(map[e].value == map[e+12].value && map[e+8].value == 0 & map[e+4].value == 0 && map[e+12].movable == true){
+                                map[e+12].value = map[e+12].value*3; 
+                                currScore += map[e+12].value;
+                                turnScore += map[e+12].value;
+                                moveBox(e, "down", 2); //default 3
+                                map[e+12].movable = false;
+                                map[e].value = 0;
+                                canMove = true;
+                                console.log("moveDownThree", canMove);
+                            }
                         }
                     }
                 }
@@ -176,13 +168,14 @@ switch(event.code) {                                      // 1st check if same p
                 if(map[i].value > 0){
                     if(i <= 11){
                         if(map[i].value != map[i+4].value){
-                            console.log("idk");
-                            canMove = false;
+                            console.log("idk", i);
+                            //canMove = false;
                         }
                         if(map[i+4].value == 0){
                             map[i+4].value = map[i].value;
                             moveBox(i, "down", 1);
                             map[i].value = 0;   
+                            console.log("move", i);
                             canMove = true;
                         }
                     }  
@@ -199,35 +192,37 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowUp":
         console.log(event.code)
         arrW.forEach(e => {
-            if(e >= 4){
-                if(map[e].value == map[e-4].value &&  map[e-4].movable == true){
-                    map[e-4].value = map[e-4].value*3;
-                    currScore += map[e-4].value;
-                    turnScore += map[e-4].value;
-                    moveBox(e, "up", 1);
-                    map[e-4].movable = false; 
-                    map[e].value = 0;
-                    canMove = true;
-                }
-                if(e >= 8){
-                    if(map[e].value == map[e-8].value & map[e-4].value == 0 && map[e-8].movable == true){
-                        map[e-8].value = map[e-8].value*3; 
-                        currScore += map[e-8].value;
-                        turnScore += map[e-8].value;
-                        moveBox(e, "up", 2);
-                        map[e-8].movable = false;
+            if(map[e].value > 0){
+                if(e >= 4){
+                    if(map[e].value == map[e-4].value &&  map[e-4].movable == true){
+                        map[e-4].value = map[e-4].value*3;
+                        currScore += map[e-4].value;
+                        turnScore += map[e-4].value;
+                        moveBox(e, "up", 1);
+                        map[e-4].movable = false; 
                         map[e].value = 0;
                         canMove = true;
                     }
-                    if(e >= 12){
-                        if(map[e].value == map[e-12].value && map[e-8].value == 0 & map[e-4].value == 0 && map[e-12].movable == true){
-                            map[e-12].value = map[e-12].value*3; 
-                            currScore += map[e-12].value;
-                            turnScore += map[e-12].value;
-                            moveBox(e, "up", 3);
-                            map[e-12].movable = false;
+                    if(e >= 8){
+                        if(map[e].value == map[e-8].value & map[e-4].value == 0 && map[e-8].movable == true){
+                            map[e-8].value = map[e-8].value*3; 
+                            currScore += map[e-8].value;
+                            turnScore += map[e-8].value;
+                            moveBox(e, "up", 2);
+                            map[e-8].movable = false;
                             map[e].value = 0;
                             canMove = true;
+                        }
+                        if(e >= 12){
+                            if(map[e].value == map[e-12].value && map[e-8].value == 0 & map[e-4].value == 0 && map[e-12].movable == true){
+                                map[e-12].value = map[e-12].value*3; 
+                                currScore += map[e-12].value;
+                                turnScore += map[e-12].value;
+                                moveBox(e, "up", 3);
+                                map[e-12].movable = false;
+                                map[e].value = 0;
+                                canMove = true;
+                            }
                         }
                     }
                 }
@@ -239,7 +234,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(i >= 4){
                         if(map[i] != map[i-4]){
                             console.log("idk");
-                            canMove = false;
+                            //canMove = false;
                         }
                         if(map[i-4].value == 0){
                             map[i-4].value = map[i].value;
@@ -261,39 +256,41 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowLeft":
         console.log(event.code)
         arrA.forEach(e => {
-            if(e != 0 && e != 4 && e != 8 && e != 12){
-                if(map[e].value == map[e-1].value && map[e-1].movable == true){
-                    map[e-1].value = map[e-1].value*3; 
-                    currScore += map[e-1].value;
-                    turnScore += map[e-1].value;
-                    moveBox(e, "left", 1);
-                    map[e-1].movable = false;
-                    map[e].value = 0;
-                    canMove = true;
-                }
-                if(e != 1 && e != 5 && e != 9 && e != 13){
-                    if(map[e].value == map[e-2].value & map[e-1].value == 0 && map[e-2].movable == true){
-                        map[e-2].value = map[e-2].value*3; 
-                        currScore += map[e-2].value;
-                        turnScore += map[e-2].value;
-                        moveBox(e, "left", 2);
-                        map[e-2].movable = false;
+            if(map[e].value > 0){
+                if(e != 0 && e != 4 && e != 8 && e != 12){
+                    if(map[e].value == map[e-1].value && map[e-1].movable == true){
+                        map[e-1].value = map[e-1].value*3; 
+                        currScore += map[e-1].value;
+                        turnScore += map[e-1].value;
+                        moveBox(e, "left", 1);
+                        map[e-1].movable = false;
                         map[e].value = 0;
                         canMove = true;
                     }
-                    if(e != 2 && e != 6 && e != 10 && e != 14){
-                        if(map[e].value == map[e-3].value & map[e-2].value == 0 & map[e-1].value == 0 && map[e-3].movable == true){
-                            map[e-3].value = map[e-3].value*3; 
-                            currScore += map[e-3].value;
-                            turnScore += map[e-3].value;
-                            moveBox(e, "left", 3);
-                            map[e-3].movable = false;
+                    if(e != 1 && e != 5 && e != 9 && e != 13){
+                        if(map[e].value == map[e-2].value & map[e-1].value == 0 && map[e-2].movable == true){
+                            map[e-2].value = map[e-2].value*3; 
+                            currScore += map[e-2].value;
+                            turnScore += map[e-2].value;
+                            moveBox(e, "left", 2);
+                            map[e-2].movable = false;
                             map[e].value = 0;
                             canMove = true;
                         }
+                        if(e != 2 && e != 6 && e != 10 && e != 14){
+                            if(map[e].value == map[e-3].value & map[e-2].value == 0 & map[e-1].value == 0 && map[e-3].movable == true){
+                                map[e-3].value = map[e-3].value*3; 
+                                currScore += map[e-3].value;
+                                turnScore += map[e-3].value;
+                                moveBox(e, "left", 3);
+                                map[e-3].movable = false;
+                                map[e].value = 0;
+                                canMove = true;
+                            }
+                        }
                     }
-                }
-            }      
+                }      
+            }
         });
         for(let x = 0; x < 3; x++){
             for(let i = 15; i >= 0; i--){  
@@ -301,7 +298,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[i].value > 0){
                         if(map[i].value != map[i-1].value){
                             console.log("idk");
-                            canMove = false;
+                            //canMove = false;
                         }
                         if(map[i-1].value == 0){
                             map[i-1].value = map[i].value;
@@ -323,39 +320,41 @@ switch(event.code) {                                      // 1st check if same p
     case "ArrowRight":
         console.log(event.code)
         arrD.forEach(e => {
-            if(e != 3 && e != 7 && e != 11 && e != 15){
-                if(map[e].value == map[e+1].value && map[e+1].movable == true){
-                    map[e+1].value = map[e+1].value*3; 
-                    currScore += map[e+1].value;
-                    turnScore += map[e+1].value;
-                    moveBox(e, "right", 1);
-                    map[e+1].movable = false;
-                    map[e].value = 0;
-                    canMove = true;
-                }
-                if(e != 2 && e != 6 && e != 10 && e != 14){
-                    if(map[e].value == map[e+2].value & map[e+1].value == 0 && map[e+2].movable == true){
-                        map[e+2].value = map[e+2].value*3; 
-                        currScore += map[e+2].value;
-                        turnScore += map[e+2].value;
-                        moveBox(e, "right", 2);
-                        map[e+2].movable = false;
+            if(map[e].value > 0){
+                if(e != 3 && e != 7 && e != 11 && e != 15){
+                    if(map[e].value == map[e+1].value && map[e+1].movable == true){
+                        map[e+1].value = map[e+1].value*3; 
+                        currScore += map[e+1].value;
+                        turnScore += map[e+1].value;
+                        moveBox(e, "right", 1);
+                        map[e+1].movable = false;
                         map[e].value = 0;
                         canMove = true;
                     }
-                    if(e != 1 && e != 5 && e != 9 && e != 13){
-                        if(map[e].value == map[e+3].value & map[e+2].value == 0 & map[e+1].value == 0 && map[e+3].movable == true){
-                            map[e+3].value = map[e+3].value*3;
-                            currScore += map[e+3].value;
-                            turnScore += map[e+3].value;
-                            moveBox(e, "right", 3);
-                            map[e+3].movable = false;
+                    if(e != 2 && e != 6 && e != 10 && e != 14){
+                        if(map[e].value == map[e+2].value & map[e+1].value == 0 && map[e+2].movable == true){
+                            map[e+2].value = map[e+2].value*3; 
+                            currScore += map[e+2].value;
+                            turnScore += map[e+2].value;
+                            moveBox(e, "right", 2);
+                            map[e+2].movable = false;
                             map[e].value = 0;
                             canMove = true;
                         }
+                        if(e != 1 && e != 5 && e != 9 && e != 13){
+                            if(map[e].value == map[e+3].value & map[e+2].value == 0 & map[e+1].value == 0 && map[e+3].movable == true){
+                                map[e+3].value = map[e+3].value*3;
+                                currScore += map[e+3].value;
+                                turnScore += map[e+3].value;
+                                moveBox(e, "right", 3);
+                                map[e+3].movable = false;
+                                map[e].value = 0;
+                                canMove = true;
+                            }
+                        }
                     }
-                }
-            } 
+                } 
+            }
         });
         for(let x = 0; x < 3; x++){
             for(let i = 0; i <= map.length - 1; i++){  
@@ -363,7 +362,7 @@ switch(event.code) {                                      // 1st check if same p
                     if(map[i].value > 0){
                         if(map[i].value != map[i+1].value){
                             console.log("idk");
-                            canMove = false;
+                            //canMove = false;
                         }
                         if(map[i+1].value == 0){
                             map[i+1].value = map[i].value;
@@ -587,14 +586,15 @@ function moveBox(id, direction, multiplier){
     }
 }
 
-function moveCheck(){
-    map.forEach(e => {
-        if(e.value > 0){ //down
-            if(indexOf(e) < 12){
-                
-                    //bool w move()
-                
-            }
-        }
-    })
+const debugMap = () =>{
+    console.log(
+        "|" + map[0].value + "|" + map[1].value + "|" + map[2].value + "|" + map[3].value+ "|\n" +
+        " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
+        "|" + map[4].value + "|" + map[5].value + "|" + map[6].value + "|" + map[7].value + "|\n" +
+        " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
+        "|" + map[8].value + "|" + map[9].value + "|" + map[10].value + "|" + map[11].value + "|\n" +
+        " " + "-" + " " + "-" + " " + "-" + " " + "-\n" +
+        "|" + map[12].value + "|" + map[13].value + "|" + map[14].value + "|" + map[15].value + "|\n" +
+        " " + "-" + " " + "-" + " " + "-" + " " + "-" 
+    )
 }
