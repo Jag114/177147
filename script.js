@@ -30,6 +30,8 @@ var firstUpdate = true;
 var currScore = 0;
 var turnScore = 0;
 var canMove = false;
+var firstMove = null;
+var lastMove = null;
 
 function wynik(){//count score
     if(localStorage.getItem("highscore"))
@@ -124,59 +126,63 @@ function update(){ //update map
        
 }
 
+document.addEventListener("keydown", function(e) {  //site doesnt scroll with that
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("touchmove", function(e) { 
+    e.preventDefault();
+});
+
 document.addEventListener("keydown",function (event){ //take input and modify map accordingly
     move(event);
-}, false); 
-
-var firstMove = null;
-var lastMove = null;
+}); 
 
 document.addEventListener("touchstart", function(e){
-    var x = e.touches[0].clientX;
-    var y = e.touches[0].clientY;
+    //var x = e.touches[0].clientX;
+    //var y = e.touches[0].clientY;
     firstMove = e;
-    console.log("Start: ",x,y)
-}, false);
-
-document.addEventListener("touchmove", function(e){
-    var x = e.touches[0].clientX;
-    var y = e.touches[0].clientY;
-    lastMove = e;
-    var result = checkMobileMove();
-    move(result);
-    //console.log("Move: ",x,y)
+    //console.log("Start: ",x,y)
 }, false);
 
 document.addEventListener("touchend", function(e){
-    var x = e.changedTouches[0].clientX;
-    var y = e.changedTouches[0].clientY;
+    //var x = e.changedTouches[0].clientX;
+    //var y = e.changedTouches[0].clientY;
     lastEndMove = e;
-    console.log("End: ",x,y)
+    var result = checkMobileMove();
+    move(result);
+    //console.log("End: ",x,y)
 }, false);
 
 const checkMobileMove = () => {
-    XDiff = Math.abs(firstMove.touches[0].clientX - lastMove.touches[0].clientX);
-    YDiff = Math.abs(firstMove.touches[0].clientY - lastMove.touches[0].clientY);
+    XDiff = Math.abs(firstMove.touches[0].clientX - lastEndMove.changedTouches[0].clientX);
+    YDiff = Math.abs(firstMove.touches[0].clientY - lastEndMove.changedTouches[0].clientY);
 
     if(YDiff > XDiff){
-        if(firstMove.touches[0].clientY < lastMove.touches[0].clientY){
-            //console.log("Palec w dol")
-            return 0;
+        if(firstMove.touches[0].clientY < lastEndMove.changedTouches[0].clientY){
+            console.log("Palec w dol")
+            const a = {code:"KeyS"}
+            return a;
         }
-        if(firstMove.touches[0].clientY > lastMove.touches[0].clientY){
-            //console.log("Palec w gore")
-            return 1;
+        if(firstMove.touches[0].clientY > lastEndMove.changedTouches[0].clientY){
+            console.log("Palec w gore")
+            const a = {code:"KeyW"}
+            return a;
         }
     }
 
     if(XDiff > YDiff){
-        if(firstMove.touches[0].clientX < lastMove.touches[0].clientX){
-            //console.log("Palec w prawo")
-            return 2;
+        if(firstMove.touches[0].clientX < lastEndMove.changedTouches[0].clientX){
+            console.log("Palec w prawo")
+            const a = {code:"KeyD"}
+            return a;
         }
-        if(firstMove.touches[0].clientX > lastMove.touches[0].clientX){
-            //console.log("Palec w lewo")
-            return 3;
+        if(firstMove.touches[0].clientX > lastEndMove.changedTouches[0].clientX){
+            console.log("Palec w lewo")
+            const a = {code:"KeyA"}
+            return a;
         }
     }
 }
@@ -185,7 +191,6 @@ function move(event){
     switch(event.code) {                                      //1st check if same powers,then check if empty,
         case "KeyS":                                          //also check its movable property
         case "ArrowDown":
-            console.log(event.code)
             arrS.forEach(e => {
                 if(map[e].value > 0){
                     if(e <= 11){
@@ -448,26 +453,7 @@ function move(event){
             turnScore = 0;
             return update(); 
         }
-        
-        switch (event) {
-            case 0:
-                return console.log("Palec w dol, move switch");
-            case 1:
-                return console.log("Palec w gore, move switch");
-            case 2:
-                return console.log("Palec w prawo, move switch");
-            case 3:
-                return console.log("Palec w lewo, move switch");
-            default:
-                break;
-        }
 }
-
-window.addEventListener("keydown", function(e) {  //site doesnt scroll with that
-    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-        e.preventDefault();
-    }
-});
 
 function checkMap(){ //check if there are empy spaces on map
     let i = 0;
