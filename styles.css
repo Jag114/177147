@@ -82,7 +82,6 @@ table tr:last-child td:last-child{
 
 @media only screen and (max-width: 768px) {
     .main{
-        margin-left: 5%;
         position: absolute;
     }
 }
