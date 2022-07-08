@@ -1,9 +1,6 @@
 //TODO (higher == more prio)
 //change checkMap() and game over mechanic, if there are 16 tiles, simulate moves
-//mobile support
 //fix animation: for moving: put new box into the place from which animated box moved (what?)
-//css
-//popUpScore for highscore if its updated
 
 class Box {
     constructor(movable, value){
@@ -32,6 +29,10 @@ var turnScore = 0;
 var canMove = false;
 var firstMove = null;
 var lastMove = null;
+const down = {code:"KeyS"};
+const up = {code:"KeyW"};
+const left = {code:"KeyA"};
+const right = {code:"KeyD"};
 
 function wynik(){//count score
     if(localStorage.getItem("highscore"))
@@ -137,7 +138,7 @@ document.addEventListener("touchmove", function(e) {
 });
 
 document.addEventListener("keydown",function (event){ //take input and modify map accordingly
-    move(event);
+    move(map,event);
 }); 
 
 document.addEventListener("touchstart", function(e){
@@ -152,7 +153,7 @@ document.addEventListener("touchend", function(e){
     //var y = e.changedTouches[0].clientY;
     lastEndMove = e;
     var result = checkMobileMove();
-    move(result);
+    move(map,result);
     //console.log("End: ",x,y)
 }, false);
 
@@ -162,27 +163,24 @@ const checkMobileMove = () => {
 
     if(YDiff > XDiff){
         if(firstMove.touches[0].clientY < lastEndMove.changedTouches[0].clientY){
-            console.log("Palec w dol")
-            const a = {code:"KeyS"}
-            return a;
+            //console.log("Palec w dol")
+            return down;
         }
         if(firstMove.touches[0].clientY > lastEndMove.changedTouches[0].clientY){
-            console.log("Palec w gore")
+            //console.log("Palec w gore")
             const a = {code:"KeyW"}
-            return a;
+            return up;
         }
     }
 
     if(XDiff > YDiff){
         if(firstMove.touches[0].clientX < lastEndMove.changedTouches[0].clientX){
-            console.log("Palec w prawo")
-            const a = {code:"KeyD"}
-            return a;
+            //console.log("Palec w prawo")
+            return right;
         }
         if(firstMove.touches[0].clientX > lastEndMove.changedTouches[0].clientX){
-            console.log("Palec w lewo")
-            const a = {code:"KeyA"}
-            return a;
+            //console.log("Palec w lewo")
+            return left;
         }
     }
 }
@@ -460,12 +458,16 @@ function checkMap(){ //check if there are empy spaces on map
     map.forEach(e => {
         if(e.value > 0){
             i++;
+        }   
+    })
+    //console.log("I: ",i);
+    if(i == 16){
+        let a = simulateMoves();
+        if(a == 0){
+            console.error("Game Over")
+            localStorage.setItem("mapState",JSON.stringify([]));
+            return 0;
         }
-    });
-    if(i > 15){
-        console.error("Game Over")
-        localStorage.setItem("mapState",JSON.stringify([]));
-        return 0;
     }
     return 1;
 }
@@ -664,4 +666,8 @@ const debugMap = () =>{
         "|" + map[12].value + "|" + map[13].value + "|" + map[14].value + "|" + map[15].value + "|\n" +
         " " + "-" + " " + "-" + " " + "-" + " " + "-" 
     )
+}
+
+const simulateMoves = () => {  //if there are no moves left return 0
+    
 }
