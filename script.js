@@ -138,7 +138,7 @@ document.addEventListener("touchmove", function(e) {
 });
 
 document.addEventListener("keydown",function (event){ //take input and modify map accordingly
-    move(map,event);
+    move(event);
 }); 
 
 document.addEventListener("touchstart", function(e){
@@ -153,7 +153,7 @@ document.addEventListener("touchend", function(e){
     //var y = e.changedTouches[0].clientY;
     lastEndMove = e;
     var result = checkMobileMove();
-    move(map,result);
+    move(result);
     //console.log("End: ",x,y)
 }, false);
 
@@ -168,7 +168,6 @@ const checkMobileMove = () => {
         }
         if(firstMove.touches[0].clientY > lastEndMove.changedTouches[0].clientY){
             //console.log("Palec w gore")
-            const a = {code:"KeyW"}
             return up;
         }
     }
