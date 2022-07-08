@@ -3,6 +3,7 @@ body{
     font-weight: bold;
     background-color: #faf8ef;
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    touch-action: none;
 }
 
 h1{
@@ -30,6 +31,8 @@ table{
     overflow: hidden;
     table-layout: fixed;
     width: 460px;
+    position: relative;
+    left: -8px;
 }
 
 tr{
@@ -73,8 +76,15 @@ table tr:last-child td:last-child{
 }
 
 .main{
-    margin:0px max(33%) 0px max(33%);
+    margin-left: 33%;
     position: absolute;
+}
+
+@media only screen and (max-width: 768px) {
+    .main{
+        margin-left: 5%;
+        position: absolute;
+    }
 }
 
 @keyframes box_animation {
