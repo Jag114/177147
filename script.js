@@ -1,7 +1,27 @@
 //TODO (higher == more prio)
 //change checkMap() and game over mechanic, if there are 16 tiles, simulate moves
 //fix animation: for moving: put new box into the place from which animated box moved (what?)
+// map = [
+//     {movable: true, value: 3},
+//     {movable: true, value: 9},
+//     {movable: true, value: 3},
+//     {movable: true, value: 9},
 
+//     {movable: true, value: 9},
+//     {movable: true, value: 3},
+//     {movable: true, value: 9},
+//     {movable: true, value: 3},
+
+//     {movable: true, value: 3},
+//     {movable: true, value: 9},
+//     {movable: true, value: 3},
+//     {movable: true, value: 9},
+
+//     {movable: true, value: 9},
+//     {movable: true, value: 3},
+//     {movable: true, value: 9},
+//     {movable: true, value: 3}
+// ]
 class Box {
     constructor(movable, value){
         this.movable = movable;
@@ -33,6 +53,7 @@ const down = {code:"KeyS"};
 const up = {code:"KeyW"};
 const left = {code:"KeyA"};
 const right = {code:"KeyD"};
+var simCheck = true;
 
 function wynik(){//count score
     if(localStorage.getItem("highscore"))
@@ -76,9 +97,12 @@ function update(){ //update map
     let rand2 = Math.floor(Math.random() * (16 - 0));
     if(map[rand1].value != 0 || map[rand2].value != 0){
         let check = checkMap();
+        console.log("Update")
         if(check == 0){
             document.getElementById("overlay").style.display = "block";
-            return;
+            map = [];
+            console.log("Update Game Over")
+            return 0;
         }
         return update();
     }
@@ -120,6 +144,7 @@ function update(){ //update map
             mapState = [...map];
             localStorage.setItem("mapState",JSON.stringify(mapState));
             canMove = false; 
+            simCheck = true;
             console.log("UpdateEnd: ", canMove)
             return getValue(), checkMap();
         }else {return update()}
@@ -461,14 +486,69 @@ function checkMap(){ //check if there are empy spaces on map
     })
     //console.log("I: ",i);
     if(i == 16){
-        let a = simulateMoves();
-        if(a == 0){
-            console.error("Game Over")
-            localStorage.setItem("mapState",JSON.stringify([]));
-            return 0;
+        console.log(simCheck)
+        if(simCheck == true){
+            let a = simulateMoves();
+            if(a == 0){
+                console.error("Game Over")
+                //localStorage.setItem("mapState",JSON.stringify([]));
+                simCheck = false;
+                return 0;
+            }
         }
+        simCheck = false;
     }
     return 1;
+}
+
+const simulateMoves = () => { //up > down, left > right
+    let x = 0;
+    for(let i = 0; i < map.length; i++){
+        console.log("a")
+        if(i > 3){
+            if(map[i].value == map[i-4].value){
+                x++;
+            }
+            if(map[i-4].value == 0){
+                x++;
+            }
+        }
+
+        if(i < 12){
+            if(map[i].value == map[i+4].value){
+                x++;
+            }
+            if(map[i+4].value == 0){
+                x++;
+            }
+        }
+
+        if(i != 0 && i != 4 && i != 8 && i != 12){
+            if(map[i].value == map[i-1].value){
+                x++;
+            }
+            if(map[i-1].value == 0){
+                x++;
+            }
+        }
+
+        if(i != 3 && i != 7 && i != 11 && i != 15){
+            if(map[i].value == map[i+1].value){
+                x++;
+            }
+            if(map[i+1].value == 0){
+                x++;
+            }
+        }
+    }
+    console.log("b")
+    if(x == 0){ 
+        console.log("c")
+        return 0;
+    }
+    console.log("d")
+    return 1;
+    
 }
 
 function getValue(){ //get value from map[] and put it into box
@@ -665,8 +745,4 @@ const debugMap = () =>{
         "|" + map[12].value + "|" + map[13].value + "|" + map[14].value + "|" + map[15].value + "|\n" +
         " " + "-" + " " + "-" + " " + "-" + " " + "-" 
     )
-}
-
-const simulateMoves = () => {  //if there are no moves left return 0
-    
 }

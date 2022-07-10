@@ -261,11 +261,12 @@ table tr:last-child td:last-child{
     width: 655px;
     height: 655px;
     background-color: rgba(238, 228, 218, 0.75);
-    z-index: 0;
-    margin-left: 10px;
+    z-index: 2;
+    margin-left: 2px;
     margin-top:10px;
     text-align: center;
     cursor: default;
+    border-radius: 10px;
 }
 
 #lose{
