@@ -1,27 +1,27 @@
 //TODO (higher == more prio)
 //change checkMap() and game over mechanic, if there are 16 tiles, simulate moves
 //fix animation: for moving: put new box into the place from which animated box moved (what?)
- map = [
-     {movable: true, value: 3},
-     {movable: true, value: 9},
-     {movable: true, value: 3},
-     {movable: true, value: 9},
+//  map = [
+//      {movable: true, value: 3},
+//      {movable: true, value: 9},
+//      {movable: true, value: 3},
+//      {movable: true, value: 9},
 
-     {movable: true, value: 9},
-     {movable: true, value: 3},
-     {movable: true, value: 9},
-     {movable: true, value: 3},
+//      {movable: true, value: 9},
+//      {movable: true, value: 3},
+//      {movable: true, value: 9},
+//      {movable: true, value: 3},
 
-     {movable: true, value: 3},
-     {movable: true, value: 9},
-     {movable: true, value: 3},
-     {movable: true, value: 9},
+//      {movable: true, value: 3},
+//      {movable: true, value: 9},
+//      {movable: true, value: 3},
+//      {movable: true, value: 9},
 
-     {movable: true, value: 9},
-     {movable: true, value: 3},
-     {movable: true, value: 9},
-     {movable: true, value: 3}
- ]
+//      {movable: true, value: 9},
+//      {movable: true, value: 3},
+//      {movable: true, value: 9},
+//      {movable: true, value: 3}
+//  ]
 class Box {
     constructor(movable, value){
         this.movable = movable;
