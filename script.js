@@ -1,27 +1,27 @@
 //TODO (higher == more prio)
 //change checkMap() and game over mechanic, if there are 16 tiles, simulate moves
 //fix animation: for moving: put new box into the place from which animated box moved (what?)
-// map = [
-//     {movable: true, value: 3},
-//     {movable: true, value: 9},
-//     {movable: true, value: 3},
-//     {movable: true, value: 9},
+ map = [
+     {movable: true, value: 3},
+     {movable: true, value: 9},
+     {movable: true, value: 3},
+     {movable: true, value: 9},
 
-//     {movable: true, value: 9},
-//     {movable: true, value: 3},
-//     {movable: true, value: 9},
-//     {movable: true, value: 3},
+     {movable: true, value: 9},
+     {movable: true, value: 3},
+     {movable: true, value: 9},
+     {movable: true, value: 3},
 
-//     {movable: true, value: 3},
-//     {movable: true, value: 9},
-//     {movable: true, value: 3},
-//     {movable: true, value: 9},
+     {movable: true, value: 3},
+     {movable: true, value: 9},
+     {movable: true, value: 3},
+     {movable: true, value: 9},
 
-//     {movable: true, value: 9},
-//     {movable: true, value: 3},
-//     {movable: true, value: 9},
-//     {movable: true, value: 3}
-// ]
+     {movable: true, value: 9},
+     {movable: true, value: 3},
+     {movable: true, value: 9},
+     {movable: true, value: 3}
+ ]
 class Box {
     constructor(movable, value){
         this.movable = movable;
@@ -53,7 +53,6 @@ const down = {code:"KeyS"};
 const up = {code:"KeyW"};
 const left = {code:"KeyA"};
 const right = {code:"KeyD"};
-var simCheck = true;
 
 function wynik(){//count score
     if(localStorage.getItem("highscore"))
@@ -104,7 +103,7 @@ function update(){ //update map
             console.log("Update Game Over")
             return 0;
         }
-        return update();
+        //return update();
     }
     
     if(firstUpdate == true){ 
@@ -144,7 +143,6 @@ function update(){ //update map
             mapState = [...map];
             localStorage.setItem("mapState",JSON.stringify(mapState));
             canMove = false; 
-            simCheck = true;
             console.log("UpdateEnd: ", canMove)
             return getValue(), checkMap();
         }else {return update()}
@@ -486,17 +484,12 @@ function checkMap(){ //check if there are empy spaces on map
     })
     //console.log("I: ",i);
     if(i == 16){
-        console.log(simCheck)
-        if(simCheck == true){
             let a = simulateMoves();
             if(a == 0){
                 console.error("Game Over")
                 //localStorage.setItem("mapState",JSON.stringify([]));
-                simCheck = false;
                 return 0;
             }
-        }
-        simCheck = false;
     }
     return 1;
 }
