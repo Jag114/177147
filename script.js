@@ -1,5 +1,5 @@
 //TODO (higher == more prio)
-//change checkMap() and game over mechanic, if there are 16 tiles, simulate moves
+//save bool gameOver to localStorage
 //fix animation: for moving: put new box into the place from which animated box moved (what?)
 //  map = [
 //      {movable: true, value: 3},
@@ -54,7 +54,7 @@ const up = {code:"KeyW"};
 const left = {code:"KeyA"};
 const right = {code:"KeyD"};
 
-function wynik(){//count score
+function score(){//count score
     if(localStorage.getItem("highscore"))
     {
         var bestSuma = localStorage.getItem("highscore");
@@ -82,7 +82,7 @@ function checkSave(){
     firstUpdate = false;
     let scoreCount = document.getElementById("scoreNow");
     let scoreHigh = document.getElementById("scoreBest");
-    let scores = wynik();
+    let scores = score();
     scoreCount.innerText = scores.score;
     scoreHigh.innerText = scores.highscore;
     getValue();
@@ -99,7 +99,7 @@ function update(){ //update map
         console.log("Update")
         if(check == 0){
             document.getElementById("overlay").style.display = "block";
-            map = [];
+            map = makeBoxObjects(16);
             console.log("Update Game Over")
             return 0;
         }
@@ -114,7 +114,7 @@ function update(){ //update map
         }else{
             map[rand1].value = 3;
             map[rand2].value = 3;
-            let scores = wynik();
+            let scores = score();
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             animate(rand1,rand2)
@@ -135,7 +135,7 @@ function update(){ //update map
     let rand = Math.floor(Math.random() * (16 - 0));
         if(map[rand].value == 0){
             map[rand].value = 3;
-            let scores = wynik();
+            let scores = score();
             scoreCount.innerText = scores.score;
             scoreHigh.innerText = scores.highscore;
             animate(rand);
